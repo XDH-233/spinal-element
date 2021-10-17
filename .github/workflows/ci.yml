@@ -1,9 +1,9 @@
 name: RTL-CI
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
   schedule: [cron: "12 */24 * * *"]
 
 jobs:
