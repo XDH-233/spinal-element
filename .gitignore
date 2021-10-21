@@ -1,0 +1,12 @@
+*.class
+*.cache
+*.v
+*.cpp
+*.d
+*.so
+*.mk
+*.jou
+*.log
+simWorkspace
+target
+tmp
