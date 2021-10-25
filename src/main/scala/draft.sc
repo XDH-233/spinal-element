@@ -1,9 +1,10 @@
-BigInt("41", 16)
-BigInt("0E", 16)
-BigInt("DE", 16)
-BigInt("5A", 16)
 
-import lib.simSupport._
 
-val ba = Array[BigInt](65, 14, 222, 90)
-ba.reduce(_^_)
+import spinal.core._
+import spinal.sim._
+import spinal.core.sim._
+import spinal.lib._
+import spinal.lib.fsm._
+
+
+println(log2Up(2))

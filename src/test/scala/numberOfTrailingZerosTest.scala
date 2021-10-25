@@ -7,10 +7,13 @@ import spinal.lib.fsm._
 
 class numberOfTrailingZerosTest extends AnyFlatSpec {
     it should "work right" in {
-        for(l <- 2 until 33){
-            simNow(l)
-        }
+        simNow(8)
+//        for(l <- 2 until 33){
+//            simNow(l)
+//        }
     }
+
+
     def simNow(W: Int)={
         SimConfig.withWave.compile{
             val dut = new numberOfTrailingZeros(W)
