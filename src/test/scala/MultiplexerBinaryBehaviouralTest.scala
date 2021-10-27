@@ -15,7 +15,7 @@ class multiplexerBinaryBehaviouralTest extends AnyFlatSpec {
 
     def simNow(width: Int, count: Int) = {
         SimConfig.withWave.compile {
-            val dut = new multiplexerBinaryBehavioural(width, count)
+            val dut = new MultiplexerBinaryBehavioural(width, count)
 
             dut
         }.doSim { dut =>

@@ -13,7 +13,7 @@ class muxOneHotTest extends AnyFlatSpec {
     }
     def simNow(W: Int, C: Int)={
         SimConfig.withWave.compile{
-            val dut = new muxOneHot(W, C)
+            val dut = new MuxOneHot(W, C)
 
             dut
         }.doSim{dut=>

@@ -19,7 +19,7 @@ class wordReducerTest extends AnyFlatSpec {
 
     def simNow(count: Int, width: Int, OP: Value): Unit ={
         SimConfig.withWave.compile{
-            val dut = new wordReducer(wordCount = count, wordWidth = width, op = OP).setDefinitionName("wordReducer" + OP.toString)
+            val dut = new WordReducer(wordCount = count, wordWidth = width, op = OP).setDefinitionName("wordReducer" + OP.toString)
             dut
         }.doSim{dut=>
             import dut._

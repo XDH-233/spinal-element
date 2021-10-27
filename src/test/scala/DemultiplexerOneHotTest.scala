@@ -16,7 +16,7 @@ class demultiplexerOneHotTest extends AnyFlatSpec {
 
     def simNow(W: Int, C: Int, BroadCast: Boolean)={
         SimConfig.withWave.compile{
-            val dut = new demultiplexerOneHot(W,C, BroadCast)
+            val dut = new DemultiplexerOneHot(W, C, BroadCast)
 
             dut
         }.doSim{dut=>

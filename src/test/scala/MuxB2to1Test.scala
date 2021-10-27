@@ -10,7 +10,7 @@ class muxB2to1Test extends AnyFlatSpec {
         s"${w} bits input" should "work right" in simNow(w)
     }
     def simNow(W: Int)={
-        SimConfig.withWave.compile(new muxB2to1(8)).doSim{dut=>
+        SimConfig.withWave.compile(new MuxB2to1(8)).doSim{ dut=>
             import dut._
             for(s <- 0 until 1000){
                 wordIn0.randomize()

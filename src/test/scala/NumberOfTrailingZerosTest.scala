@@ -16,7 +16,7 @@ class numberOfTrailingZerosTest extends AnyFlatSpec {
 
     def simNow(W: Int)={
         SimConfig.withWave.compile{
-            val dut = new numberOfTrailingZeros(W)
+            val dut = new NumberOfTrailingZeros(W)
             dut.all_log.simPublic()
             dut.lsb1.simPublic()
             dut

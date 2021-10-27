@@ -7,7 +7,7 @@ import spinal.lib.fsm._
 class bitShifterTest extends AnyFlatSpec {
 
     SimConfig.withWave.compile{
-        val dut = new bitShifter(8)
+        val dut = new BitShifter(8)
 
         dut
     }.doSim{dut=>

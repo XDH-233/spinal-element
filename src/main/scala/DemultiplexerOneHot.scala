@@ -17,7 +17,7 @@ case class demultiplexerOneHot(wordWidth: Int, outputCount: Int, broadcast: Bool
         wordsOut := wordOutVec.reduce(_ ## _)
     }
     else{
-        val annullerArr = Array.fill(outputCount)(annuller(wordWidth, implementation.AND))
+        val annullerArr = Array.fill(outputCount)(Annuller(wordWidth, implementation.AND))
         annullerArr.zipWithIndex.foreach{case(ann, index)=>
             ann.annul := ~selectors(index)
             ann.dataIn := wordIn

@@ -15,7 +15,7 @@ class demultiplexerBinaryTest extends AnyFlatSpec {
         }
     }
     def simNow(W: Int, C:Int, B: Boolean)={
-        SimConfig.withWave.compile(new demultiplexerBinary(W, C, B)).doSim{dut=>
+        SimConfig.withWave.compile(new DemultiplexerBinary(W, C, B)).doSim{ dut=>
             import dut._
             import lib.simSupport._
 

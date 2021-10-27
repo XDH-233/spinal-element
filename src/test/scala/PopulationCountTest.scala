@@ -11,7 +11,7 @@ class populationCountTest extends AnyFlatSpec {
     }
     def simNow(W: Int): Unit ={
         SimConfig.withWave.compile{
-            val dut = new populationCount(W)
+            val dut = new PopulationCount(W)
 
             dut
         }.doSim{dut=>

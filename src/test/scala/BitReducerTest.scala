@@ -41,7 +41,7 @@ class bitReducerTest extends AnyFlatSpec {
         }
     }
     def simNow(width: Int, OP: reducerOp.Value) = {
-        SimConfig.withWave.compile((new bitReducer(width, OP)).setDefinitionName("reducer"+OP.toString)).doSim{ dut=>
+        SimConfig.withWave.compile((new BitReducer(width, OP)).setDefinitionName("reducer"+OP.toString)).doSim{ dut=>
             import dut._
             for(s <- 0 until 1000){
                 io.bitsIn.randomize()

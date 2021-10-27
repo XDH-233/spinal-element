@@ -8,7 +8,7 @@ import spinal.lib.fsm._
 
 class wordReverserTest extends AnyFlatSpec{
     it should "work normally" in {
-        SimConfig.withWave.compile(new wordReverser(wordWidth = 8,wordCount = 4)).doSim{dut=>
+        SimConfig.withWave.compile(new WordReverser(wordWidth = 8, wordCount = 4)).doSim{ dut=>
             import dut._
             for(s <- 0 until 100){
                 wordsIn.randomize()

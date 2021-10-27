@@ -10,14 +10,14 @@ case class muxOneHot(wordWidth: Int, wordCount: Int) extends Component{
     val wordOut = out Bits(wordWidth bits)
 
     val wordsInSelected = Bits(wordWidth * wordCount bits)
-    val annullerArr = Array.fill(wordCount)( annuller(wordWidth, implementation.MUX))
+    val annullerArr = Array.fill(wordCount)(Annuller(wordWidth, implementation.MUX))
     annullerArr.zipWithIndex.foreach{case(ann, index )=>
         ann.annul := ~selectors(index)
         ann.dataIn := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits))(index)
         wordsInSelected((index + 1) * wordWidth - 1 downto index * wordWidth) := ann.dataOut
     }
 
-    val reducerOR = wordReducer(wordWidth, wordCount, reducerOp.OR)
+    val reducerOR = WordReducer(wordWidth, wordCount, reducerOp.OR)
     reducerOR.wordsIn := wordsInSelected
     wordOut := reducerOR.wordOut
 }

@@ -11,7 +11,7 @@ class addressDecoderBehaTest extends AnyFlatSpec {
     }
     def simNow(W: Int)={
         SimConfig.withWave.compile{
-            val dut = new addressDecoderBeha((W))
+            val dut = new AddressDecoderBeha((W))
 
             dut
         }.doSim{dut=>

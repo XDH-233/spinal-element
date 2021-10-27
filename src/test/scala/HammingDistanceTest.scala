@@ -12,7 +12,7 @@ class hammingDistanceTest extends AnyFlatSpec {
     }
     def simNow(W:Int)={
         SimConfig.withWave.compile{
-            val dut = new hammingDistance(W)
+            val dut = new HammingDistance(W)
 
             dut
         }.doSim{dut=>

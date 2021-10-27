@@ -10,7 +10,7 @@ case class binaryToOneHot(binaryWidth: Int, outputWidth: Int) extends Component{
     var addrWidth = log2Up(outputWidth)
     if(binaryWidth > log2Up(outputWidth))
         addrWidth = binaryWidth
-    val addrDecoBehaArr = Array.fill(outputWidth)(addressDecoderBeha(addrWidth))
+    val addrDecoBehaArr = Array.fill(outputWidth)(AddressDecoderBeha(addrWidth))
     addrDecoBehaArr.zipWithIndex.foreach{case(dec, index)=>
         dec.baseAddr := index
         dec.boundAddr := index

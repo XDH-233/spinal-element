@@ -14,7 +14,7 @@ class muxStrTest extends AnyFlatSpec {
 
     def simNow(W: Int, C:Int)={
         SimConfig.withWave.compile{
-            val dut = new muxStr(W,C)
+            val dut = new MuxStr(W, C)
 
             dut
         }.doSim{dut=>

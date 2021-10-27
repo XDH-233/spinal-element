@@ -11,7 +11,7 @@ class pipeSkidBufferTest extends AnyFlatSpec {
         SimConfig.withWave.withConfig(SpinalConfig(
             defaultConfigForClockDomains = ClockDomainConfig(resetKind = SYNC, resetActiveLevel = HIGH),
             defaultClockDomainFrequency = FixedFrequency(100 MHz)
-            )).compile(new pipeSkidBuffer(8)).doSim { dut =>
+            )).compile(new PipeSkidBuffer(8)).doSim { dut =>
             import dut._
             import scala.util.Random
 

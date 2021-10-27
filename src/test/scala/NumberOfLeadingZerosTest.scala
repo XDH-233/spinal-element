@@ -12,7 +12,7 @@ class numberOfLeadingZerosTest extends AnyFlatSpec {
 
     def simNow(W: Int) = {
         SimConfig.withWave.compile {
-            val dut = new numberOfLeadingZeros(W)
+            val dut = new NumberOfLeadingZeros(W)
 
             dut
         }.doSim { dut =>

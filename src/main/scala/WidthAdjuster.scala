@@ -12,3 +12,13 @@ case class widthAdjuster(wordWidthIn: Int, wordWidthOut: Int, sign: Boolean) ext
     else
         adjustedOutput := originalInput.resize(wordWidthOut)
 }
+
+object widthAdjusterSim extends App{
+    SimConfig.withWave.compile(new widthAdjuster(1,8, true)).doSim{dut=>
+        import dut._
+        for(s <- 0 until 100){
+            originalInput.randomize()
+            sleep(1)
+        }
+    }
+}
