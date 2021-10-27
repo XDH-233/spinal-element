@@ -5,9 +5,14 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 
-case class populationCount(width: Int) extends Component{
-    val wordIn = in Bits(width bits)
-    val countOut = out Bits(log2Up(width) + 1 bits)
+case class PopulationCount(width: Int) extends Component{
+    val io = new Bundle{
+        val wordIn = in Bits(width bits)
+        val countOut = out Bits(log2Up(width) + 1 bits)
+    }
+    noIoPrefix()
+    import io._
+
     countOut := wordIn.subdivideIn(1 bits).map(_.asUInt).map(_.resize(log2Up(width)  + 1)).reduceBalancedTree(_ + _).asBits
 }
 

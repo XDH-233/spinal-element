@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 import scala.collection.mutable.Queue
 
-class pipeSkidBufferTest extends AnyFlatSpec {
+class PipeSkidBufferTest extends AnyFlatSpec {
     "pipeSkidBuffer" should "work normally " in {
         SimConfig.withWave.withConfig(SpinalConfig(
             defaultConfigForClockDomains = ClockDomainConfig(resetKind = SYNC, resetActiveLevel = HIGH),
@@ -14,6 +14,7 @@ class pipeSkidBufferTest extends AnyFlatSpec {
             )).compile(new PipeSkidBuffer(8)).doSim { dut =>
             import dut._
             import scala.util.Random
+            import io._
 
             dut.clockDomain.forkStimulus(10)
             Input.valid #= false

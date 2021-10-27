@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class addressDecoderBehaTest extends AnyFlatSpec {
+class AddressDecoderBehaTest extends AnyFlatSpec {
     for(i <- 1 to 16){
         s"${i} bits input" should "work right " in simNow(i)
     }
@@ -16,6 +16,7 @@ class addressDecoderBehaTest extends AnyFlatSpec {
             dut
         }.doSim{dut=>
             import dut._
+            import dut.io._
             for(s <- 0 until 1000){
                 baseAddr.randomize()
                 boundAddr.randomize()

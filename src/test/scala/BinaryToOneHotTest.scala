@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class binaryToOneHotTest extends AnyFlatSpec {
+class BinaryToOneHotTest extends AnyFlatSpec {
     for(i <- 1 to 16){
         for(o <- 1 to 16){
             s"input width: ${i}, output width: ${o}" should " work right" in simNow(i,o)
@@ -13,12 +13,13 @@ class binaryToOneHotTest extends AnyFlatSpec {
     }
     def simNow(inWidth: Int, outWidth: Int)={
         SimConfig.withWave.compile{
-            val dut = new binaryToOneHot(inWidth, outWidth)
+            val dut = new BinaryToOneHot(inWidth, outWidth)
 
             dut
         }.doSim{dut=>
             import dut._
             import lib.simSupport.oneHot
+            import dut.io._
             for(s <- 0 until 1000){
                 binaryIn #= oneHot(inWidth)
                 sleep(1)

@@ -7,8 +7,9 @@ set -o errexit
 set -o nounset
 set -o xtrace
 
-touch build.sbt
-touch .scalafmt.conf
-sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'
-sbt clean coverage coverageReport test
-
+#touch build.sbt
+#touch .scalafmt.conf
+#sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'
+#sbt clean coverage coverageReport test
+sbt clean
+sbt clean compile "testOnly ArithmeticPredicatesBinTest AdderSubtractorBinTest"

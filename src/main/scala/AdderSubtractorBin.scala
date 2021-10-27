@@ -1,37 +1,43 @@
+// http://fpgacpu.ca/fpga/Adder_Subtractor_Binary.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class adderSubtractorBin(width: Int) extends Component{
-    val addOrSub = in Bool() // 0->add
-    val carryIn = in Bool()
-    val A , B = in Bits(width bits)
-    val sum, carries = out Bits(width bits)
-    val overflow = out Bool()
-    val carryOut = out Bool()
+case class AdderSubtractorBin(width: Int) extends Component{
+    val io = new Bundle{
+        val addOrSub = in Bool() // 0->add
+        val carryIn = in Bool()
+        val A , B = in Bits(width bits)
+        val sum, carries = out Bits(width bits)
+        val overflow = out Bool()
+        val carryOut = out Bool()
+    }
+    noIoPrefix()
 
-    val widthAdU = widthAdjuster(1, width, sign = false)
-    val widthAdS = widthAdjuster(1, width, sign = true)
-    widthAdU.originalInput := carryIn.asBits
-    widthAdS.originalInput := carryIn.asBits
 
-    val BSelected            = Mux(addOrSub, ~B, B)
-    val negationOffset: UInt = Mux(addOrSub, U(1, width bits), U(0, width bits))
-    val carryInSelected = Mux(addOrSub, widthAdS.adjustedOutput, widthAdU.adjustedOutput)
+    val widthAdU = WidthAdjuster(1, width, sign = false)
+    val widthAdS = WidthAdjuster(1, width, sign = true)
+    widthAdU.originalInput := io.carryIn.asBits
+    widthAdS.originalInput := io.carryIn.asBits
+
+    val BSelected            = Mux(io.addOrSub, ~io.B, io.B)
+    val negationOffset: UInt = Mux(io.addOrSub, U(1, width bits), U(0, width bits))
+    val carryInSelected = Mux(io.addOrSub, widthAdS.adjustedOutput, widthAdU.adjustedOutput)
 
     val res = Bits(width + 1 bits)
-    res := (A.resize(width + 1).asUInt + BSelected.resize(width + 1).asUInt + negationOffset.resize(width + 1) + carryInSelected.asSInt.resize(width + 1).asUInt).asBits
-    carryOut := res.msb
-    sum := res(width - 1 downto 0)
-    overflow := carries.msb =/= carryOut
+    res := (io.A.resize(width + 1).asUInt + BSelected.resize(width + 1).asUInt + negationOffset.resize(width + 1) + carryInSelected.asSInt.resize(width + 1).asUInt).asBits
+    io.carryOut := res.msb
+    io.sum := res(width - 1 downto 0)
+    io.overflow := io.carries.msb =/= io.carryOut
 
-    val carryInB = carryInBin(width)
-    carryInB.A := A
-    carryInB.B := BSelected
-    carryInB.sum := sum
-    carries:= carryInB.carryIn
+    val carryInB = CarryInBin(width)
+    carryInB.io.A := io.A
+    carryInB.io.B := BSelected
+    carryInB.io.sum := io.sum
+    io.carries:= carryInB.io.carryIn
 }
 // souce code in http://fpgacpu.ca/fpga/Adder_Subtractor_Binary.html
 case class Adder_Subtractor_Binary(width: Int) extends BlackBox{

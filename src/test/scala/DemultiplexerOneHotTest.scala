@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class demultiplexerOneHotTest extends AnyFlatSpec {
+class DemultiplexerOneHotTest extends AnyFlatSpec {
 //    s"width: 8, count: 5 and not broadcast" should "work right" in simNow(8, 5, false)
     for(w <- 1 to 16){
         for(c <- 2 to 8){
@@ -22,6 +22,8 @@ class demultiplexerOneHotTest extends AnyFlatSpec {
         }.doSim{dut=>
             import dut._
             import lib.simSupport._
+            import io._
+
             for(s <- 0 until 1000){
                 wordIn.randomize()
                 selectors #= oneHot(outputCount)

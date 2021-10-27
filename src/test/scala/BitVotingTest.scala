@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class bitVotingTest extends AnyFlatSpec {
+class BitVotingTest extends AnyFlatSpec {
     for(t <- 2 until 33){
         s"${t}" should "work right " in simNow(t)
     }
@@ -17,6 +17,7 @@ class bitVotingTest extends AnyFlatSpec {
             dut
         }.doSim{dut=>
             import dut._
+            import io._
             import lib.simSupport._
 
             for(s <- 0 until 1000){

@@ -1,3 +1,5 @@
+//http://fpgacpu.ca/fpga/Bit_Reducer.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
@@ -9,7 +11,7 @@ object reducerOp extends Enumeration {
     val AND, NAND, OR, NOR, XOR, XNOR = Value
 }
 
-case class bitReducer(width: Int, op: reducerOp.Value) extends Component {
+case class BitReducer(width: Int, op: reducerOp.Value) extends Component {
     val io = new Bundle {
         val bitsIn = in Bits (width bits)
         val bitOut = out Bool()
@@ -23,9 +25,6 @@ case class bitReducer(width: Int, op: reducerOp.Value) extends Component {
         case reducerOp.NOR => io.bitOut := io.bitsIn.asBools.reduce((l, r) => ~(l | r))
         case reducerOp.XOR => io.bitOut := io.bitsIn.asBools.reduce(_ ^ _)
         case reducerOp.XNOR => io.bitOut := io.bitsIn.asBools.reduce((l, r) => ~(l ^ r))
-    }
-    def toBool(bits: Bits): Bool={
-        bits(0)
     }
 }
 

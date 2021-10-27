@@ -1,14 +1,20 @@
+//http://fpgacpu.ca/fpga/Bit_Shifter.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class bitShifter(width: Int) extends Component{
-    val shiftDirection = in Bool()
-    val shiftAmount = in UInt(log2Up(width) + 1 bits) // 1->right
-    val wordIn, wordInLeft, wordInRight = in Bits(width bits)
-    val wordOut, wordOutLeft, wordOutRight = out Bits(width bits)
+case class BitShifter(width: Int) extends Component{
+    val io = new Bundle{
+        val shiftDirection = in Bool()
+        val shiftAmount = in UInt(log2Up(width) + 1 bits) // 1->right
+        val wordIn, wordInLeft, wordInRight = in Bits(width bits)
+        val wordOut, wordOutLeft, wordOutRight = out Bits(width bits)
+    }
+    noIoPrefix()
+    import io._
 
     val tmp = Bits(width * 3 bits)
     when(shiftDirection){

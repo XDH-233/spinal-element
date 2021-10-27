@@ -5,13 +5,12 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class multiplexerBinaryBehaviouralTest extends AnyFlatSpec {
-    simNow(8, 5)
-//    for (w <- 1 to  32) {
-//        for (c <- 2 to 16) {
-//            s"word width: ${w} input count: ${c} " should "work right " in simNow(w, c)
-//        }
-//    }
+class MultiplexerBinaryBehaviouralTest extends AnyFlatSpec {
+    for (w <- 1 to  32) {
+        for (c <- 2 to 16) {
+            s"word width: ${w} input count: ${c} " should "work right " in simNow(w, c)
+        }
+    }
 
     def simNow(width: Int, count: Int) = {
         SimConfig.withWave.compile {
@@ -21,6 +20,8 @@ class multiplexerBinaryBehaviouralTest extends AnyFlatSpec {
         }.doSim { dut =>
             import dut._
             import lib.simSupport._
+            import io._
+
             for (s <- 0 until 1000) {
                 wordsIn.randomize()
                 selector.randomize()

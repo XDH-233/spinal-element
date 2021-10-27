@@ -7,7 +7,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 
-class bitReducerTest extends AnyFlatSpec {
+class BitReducerTest extends AnyFlatSpec {
     import reducerOp._
 
     "bits reducer " should "work as AND" in {

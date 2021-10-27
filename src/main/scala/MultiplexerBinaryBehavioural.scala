@@ -1,13 +1,20 @@
+// http://fpgacpu.ca/fpga/Multiplexer_Binary_Behavioural.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class multiplexerBinaryBehavioural(wordWidth: Int, inputCount: Int) extends Component{
-    val selector = in UInt(log2Up(inputCount) bits)
-    val wordsIn = in Bits(wordWidth * inputCount bits)
-    val wordOut = out Bits(wordWidth bits)
+case class MultiplexerBinaryBehavioural(wordWidth: Int, inputCount: Int) extends Component{
+    val io = new Bundle{
+        val selector = in UInt(log2Up(inputCount) bits)
+        val wordsIn = in Bits(wordWidth * inputCount bits)
+        val wordOut = out Bits(wordWidth bits)
+    }
+    noIoPrefix()
+    import io._
+
     wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).read(selector)
 
 
@@ -23,7 +30,7 @@ case class Multiplexer_Binary_Behavioural(wordWidth: Int, addrWidth: Int, inputC
     addRTLPath("./src/verilog/muxBinaryBehavioral.v")
 }
 
-case class muxBinBehav(width: Int, count: Int) extends Component{
+case class MuxBinBehavVerilog(width: Int, count: Int) extends Component{
     val selector = in UInt(log2Up(count) bits)
     val words_in = in Bits(width * count bits)
     val word_out = out Bits(width bits)
@@ -35,7 +42,7 @@ case class muxBinBehav(width: Int, count: Int) extends Component{
 }
 
 object muxBinBehavSim extends App{
-    SimConfig.withWave.compile(new muxBinBehav(8, 5)).doSim{dut=>
+    SimConfig.withWave.compile(new MuxBinBehavVerilog(8, 5)).doSim{ dut=>
         import dut._
         for(s <- 0 until 100){
             words_in.randomize()

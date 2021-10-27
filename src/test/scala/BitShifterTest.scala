@@ -4,7 +4,7 @@ import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
-class bitShifterTest extends AnyFlatSpec {
+class BitShifterTest extends AnyFlatSpec {
 
     SimConfig.withWave.compile{
         val dut = new BitShifter(8)
@@ -12,6 +12,7 @@ class bitShifterTest extends AnyFlatSpec {
         dut
     }.doSim{dut=>
         import dut._
+        import io._
         for(s <- 0 until 100){
             shiftAmount #= scala.util.Random.nextInt(width + 1)
             wordInLeft #= 0

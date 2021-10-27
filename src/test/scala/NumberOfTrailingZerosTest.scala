@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class numberOfTrailingZerosTest extends AnyFlatSpec {
+class NumberOfTrailingZerosTest extends AnyFlatSpec {
     it should "work right" in {
         simNow(8)
 //        for(l <- 2 until 33){
@@ -23,6 +23,8 @@ class numberOfTrailingZerosTest extends AnyFlatSpec {
         }.doSim{dut=>
             import dut._
             import lib.simSupport._
+            import io._
+
             wordIn #= 0
             sleep(1)
             for(s <- 0 until 1000){

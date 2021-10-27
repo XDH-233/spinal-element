@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class muxStrTest extends AnyFlatSpec {
+class MuxStrTest extends AnyFlatSpec {
     for(w <- 1 to   32){
         for(c <- 2 until 16){
             s"width: ${w}, count: ${c} input" should "work right" in simNow(w, c)
@@ -20,6 +20,8 @@ class muxStrTest extends AnyFlatSpec {
         }.doSim{dut=>
             import dut._
             import lib.simSupport._
+            import io._
+
             for(s <- 0 until 100){
                 wordsIn.randomize()
                 selector.randomize()

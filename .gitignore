@@ -1,6 +1,5 @@
 *.class
 *.cache
-*.v
 *.cpp
 *.d
 *.so
@@ -10,3 +9,6 @@
 simWorkspace
 target
 tmp
+.Xil
+
+/home/xdh/IdeaProjects/spinal-element/*.v

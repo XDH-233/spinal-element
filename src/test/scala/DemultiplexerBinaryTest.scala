@@ -6,7 +6,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class demultiplexerBinaryTest extends AnyFlatSpec {
+class DemultiplexerBinaryTest extends AnyFlatSpec {
     simNow(8, 5, false)
     for(w <- 1 to 16){
         for(c <- 2 to 9){
@@ -18,7 +18,7 @@ class demultiplexerBinaryTest extends AnyFlatSpec {
         SimConfig.withWave.compile(new DemultiplexerBinary(W, C, B)).doSim{ dut=>
             import dut._
             import lib.simSupport._
-
+            import io._
             for(s <- 0 until 1000){
                 selector.randomize()
                 wordIn.randomize()

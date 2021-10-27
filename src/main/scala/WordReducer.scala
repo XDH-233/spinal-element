@@ -1,3 +1,5 @@
+//http://fpgacpu.ca/fpga/Word_Reducer.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
@@ -5,9 +7,14 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 
-case class wordReducer(wordWidth: Int, wordCount: Int, op: reducerOp.Value) extends Component{
-    val wordsIn = in Bits(wordWidth * wordCount bits)
-    val wordOut = out Bits(wordWidth bits)
+case class WordReducer(wordWidth: Int, wordCount: Int, op: reducerOp.Value) extends Component{
+    val io = new Bundle{
+        val wordsIn = in Bits(wordWidth * wordCount bits)
+        val wordOut = out Bits(wordWidth bits)
+    }
+    noIoPrefix()
+    import io._
+
     // Should I take Map in count ?
     op match {
         case reducerOp.AND => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce(_ & _)

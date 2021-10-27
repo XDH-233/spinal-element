@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class populationCountTest extends AnyFlatSpec {
+class PopulationCountTest extends AnyFlatSpec {
     for(t <- 2 until 33){
         s"${t} bits input" should "work right" in simNow(t)
     }
@@ -16,6 +16,7 @@ class populationCountTest extends AnyFlatSpec {
             dut
         }.doSim{dut=>
             import dut._
+            import io._
             for(s <- 0 until 100){
                 wordIn.randomize()
                 sleep(1)

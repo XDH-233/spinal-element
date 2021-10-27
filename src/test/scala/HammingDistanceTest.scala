@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class hammingDistanceTest extends AnyFlatSpec {
+class HammingDistanceTest extends AnyFlatSpec {
     import lib.simSupport._
     for(t <- 2 until 33){
         s"${t} bits input" should "work right" in simNow(t)
@@ -17,6 +17,8 @@ class hammingDistanceTest extends AnyFlatSpec {
             dut
         }.doSim{dut=>
             import dut._
+            import io._
+
             for(s <- 0 until 100){
                 wordA.randomize()
                 wordB.randomize()

@@ -1,21 +1,28 @@
+// http://fpgacpu.ca/fpga/Binary_to_One_Hot.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class binaryToOneHot(binaryWidth: Int, outputWidth: Int) extends Component{
-    val binaryIn = in Bits(binaryWidth bits)
-    val oneHotOut = out Bits(outputWidth bits)
+case class BinaryToOneHot(binaryWidth: Int, outputWidth: Int) extends Component{
+    val io = new Bundle{
+        val binaryIn = in Bits(binaryWidth bits)
+        val oneHotOut = out Bits(outputWidth bits)
+    }
+    noIoPrefix()
+    import io._
+
     var addrWidth = log2Up(outputWidth)
     if(binaryWidth > log2Up(outputWidth))
         addrWidth = binaryWidth
     val addrDecoBehaArr = Array.fill(outputWidth)(AddressDecoderBeha(addrWidth))
     addrDecoBehaArr.zipWithIndex.foreach{case(dec, index)=>
-        dec.baseAddr := index
-        dec.boundAddr := index
-        dec.addr := binaryIn.resize(addrWidth).asUInt
-        oneHotOut(index) := dec.hit
+        dec.io.baseAddr := index
+        dec.io.boundAddr := index
+        dec.io.addr := binaryIn.resize(addrWidth).asUInt
+        oneHotOut(index) := dec.io.hit
     }
 }
 

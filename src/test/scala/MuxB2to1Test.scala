@@ -5,13 +5,15 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class muxB2to1Test extends AnyFlatSpec {
+class MuxB2to1Test extends AnyFlatSpec {
     for(w <- 1 to 16){
         s"${w} bits input" should "work right" in simNow(w)
     }
     def simNow(W: Int)={
         SimConfig.withWave.compile(new MuxB2to1(8)).doSim{ dut=>
             import dut._
+            import io._
+
             for(s <- 0 until 1000){
                 wordIn0.randomize()
                 wordIn1.randomize()

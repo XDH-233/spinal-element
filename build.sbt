@@ -9,9 +9,8 @@ libraryDependencies ++= Seq(
     "com.github.spinalhdl" % "spinalhdl-lib_2.11" % spinalVersion,
     compilerPlugin("com.github.spinalhdl" % "spinalhdl-idsl-plugin_2.11" % spinalVersion))
 
-libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.9"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.9" % Test
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.9"
-
 
 fork := true
 

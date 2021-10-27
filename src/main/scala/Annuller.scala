@@ -1,3 +1,5 @@
+// http://fpgacpu.ca/fpga/Annuller.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
@@ -10,7 +12,7 @@ object implementation extends  Enumeration{
 
 }
 
-case class annuller(width: Int, impWay: implementation.Value) extends Component{
+case class Annuller(width: Int, impWay: implementation.Value) extends Component{
     val annul = in Bool()
     val dataIn = in Bits(width bits)
     val dataOut = out Bits(width bits)
@@ -26,7 +28,3 @@ case class annuller(width: Int, impWay: implementation.Value) extends Component{
 }
 
 
-object annullerRTL extends App{
-    SpinalVerilog((new annuller(8, implementation.MUX)).setDefinitionName("annullerMUX"))
-    SpinalVerilog((new annuller(8, implementation.AND)).setDefinitionName("annullerAND"))
-}

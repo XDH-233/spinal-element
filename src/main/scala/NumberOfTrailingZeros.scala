@@ -1,12 +1,19 @@
+// http://fpgacpu.ca/fpga/Number_of_Trailing_Zeros.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class numberOfTrailingZeros(width: Int) extends Component{
-    val wordIn = in Bits(width bits)
-    val wordOut = out Bits(log2Up(width) + 1 bits)
+case class NumberOfTrailingZeros(width: Int) extends Component{
+    val io = new Bundle{
+        val wordIn = in Bits(width bits)
+        val wordOut = out Bits(log2Up(width) + 1 bits)
+    }
+    noIoPrefix()
+    import io._
+
     val lsb1 = Bits(width bits)
     lsb1 := wordIn & (0 - wordIn.asSInt).asBits
     val all_log = Bits(width * log2Up(width) bits)

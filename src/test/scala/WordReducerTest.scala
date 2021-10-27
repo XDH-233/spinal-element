@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class wordReducerTest extends AnyFlatSpec {
+class WordReducerTest extends AnyFlatSpec {
     import reducerOp._
     import lib.simSupport._
 
@@ -23,6 +23,8 @@ class wordReducerTest extends AnyFlatSpec {
             dut
         }.doSim{dut=>
             import dut._
+            import io._
+
             for(s <- 0 until 100){
                 wordsIn.randomize()
                 sleep(1)

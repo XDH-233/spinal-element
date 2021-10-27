@@ -1,4 +1,9 @@
 package lib
+import spinal.core._
+import spinal.sim._
+import spinal.core.sim._
+import spinal.lib._
+import spinal.lib.fsm._
 
 object simSupport{
     implicit class BigIntSim(b: BigInt){
@@ -39,4 +44,14 @@ object simSupport{
         val ret = BigInt(2).pow(scala.util.Random.nextInt(width))
         ret
     }
+    implicit class BitsSim(b: Bits){
+        def toSignBigInt(width: Int): BigInt={
+            val width = b.getWidth
+            var ret = b.toBigInt
+            if(ret > BigInt(2).pow(width - 1) - 1)
+                ret = ret - BigInt(2).pow(width)
+            return ret
+        }
+    }
+
 }

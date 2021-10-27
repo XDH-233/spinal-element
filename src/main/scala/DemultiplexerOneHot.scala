@@ -1,14 +1,20 @@
+//http://fpgacpu.ca/fpga/Demultiplexer_One_Hot.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class demultiplexerOneHot(wordWidth: Int, outputCount: Int, broadcast: Boolean) extends Component{
-    val selectors = in  Bits(outputCount bits)
-    val wordIn = in Bits(wordWidth bits)
-    val wordsOut = out Bits(wordWidth * outputCount bits)
-    val validsOut = out Bits(outputCount bits)
+case class DemultiplexerOneHot(wordWidth: Int, outputCount: Int, broadcast: Boolean) extends Component{
+    val io = new Bundle{
+        val selectors = in  Bits(outputCount bits)
+        val wordIn = in Bits(wordWidth bits)
+        val wordsOut = out Bits(wordWidth * outputCount bits)
+        val validsOut = out Bits(outputCount bits)
+    }
+    noIoPrefix()
+    import io._
 
     validsOut := selectors
     if(broadcast){

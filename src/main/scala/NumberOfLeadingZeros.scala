@@ -1,14 +1,21 @@
+//http://fpgacpu.ca/fpga/Number_of_Leading_Zeros.html
+
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class numberOfLeadingZeros(width: Int) extends Component{
-    val wordIn = in Bits(width bits)
-    val wordOut = out Bits(log2Up(width) + 1 bits)
-    val trailingZeros = numberOfTrailingZeros(width)
-    trailingZeros.wordIn := wordIn.reversed
-    wordOut := trailingZeros.wordOut
+case class NumberOfLeadingZeros(width: Int) extends Component{
+    val io = new Bundle{
+        val wordIn = in Bits(width bits)
+        val wordOut = out Bits(log2Up(width) + 1 bits)
+    }
+    noIoPrefix()
+    import io._
+
+    val trailingZeros = NumberOfTrailingZeros(width)
+    trailingZeros.io.wordIn := wordIn.reversed
+    wordOut := trailingZeros.io.wordOut
 }
 
