@@ -16,7 +16,6 @@ case class BitReducer(width: Int, op: reducerOp.Value) extends Component {
         val bitsIn = in Bits (width bits)
         val bitOut = out Bool()
     }
-    noIoPrefix()
     // asBool make a great difference compare with using Bits.subD...
     op match {
         case reducerOp.AND => io.bitOut := io.bitsIn.asBools.reduce(_ & _)
@@ -58,17 +57,4 @@ case class reducerNotTop() extends Component{
     N_XOR <> u_reducerNot.N_XOR
     N_AND <> u_reducerNot.N_AND
     N_OR <> u_reducerNot.N_OR
-}
-
-object reducerNotTopSim extends App{
-    SimConfig.withWave.compile(new reducerNotTop()).doSim{dut=>
-        import dut._
-        for(s <- 0 until 1000){
-            data_in.randomize()
-            sleep(1)
-            assert(NOR.toBoolean == N_OR.toBoolean)
-            assert(NXOR.toBoolean == N_XOR.toBoolean)
-            assert(NAND.toBoolean == N_AND.toBoolean)
-        }
-    }
 }

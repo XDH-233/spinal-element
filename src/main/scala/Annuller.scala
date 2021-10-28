@@ -13,16 +13,18 @@ object implementation extends  Enumeration{
 }
 
 case class Annuller(width: Int, impWay: implementation.Value) extends Component{
-    val annul = in Bool()
-    val dataIn = in Bits(width bits)
-    val dataOut = out Bits(width bits)
+    val io = new Bundle{
+        val annul = in Bool()
+        val dataIn = in Bits(width bits)
+        val dataOut = out Bits(width bits)
+    }
 
     impWay match {
-        case implementation.MUX => dataOut := Mux(annul, B(0), dataIn)
+        case implementation.MUX => io.dataOut := Mux(io.annul, B(0), io.dataIn)
         case implementation.AND => {
             val tmp = Bits(width bits)
-            tmp.setAllTo(annul === False)
-            dataOut := dataIn & (tmp)
+            tmp.setAllTo(io.annul === False)
+            io.dataOut := io.dataIn & (tmp)
         }
     }
 }

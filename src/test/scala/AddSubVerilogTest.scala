@@ -7,16 +7,18 @@ import spinal.lib.fsm._
 
 class AddSubVerilogTest extends AnyFlatSpec {
     simNow(8)
-    def simNow(Width: Int)={
-        SimConfig.withWave.compile(new addSubVerilog(Width)).doSim{ dut=>
+
+    def simNow(Width: Int) = {
+        SimConfig.withWave.compile(new AddSubVerilog(Width)).doSim { dut =>
             import dut._
             import lib.simSupport._
+
             addSub #= true
             A #= 186
             B #= 53
             carryIn #= true
             sleep(1)
-            for(s <- 0 until 100){
+            for (s <- 0 until 100) {
                 A.randomize()
                 B.randomize()
                 carryIn.randomize()
@@ -26,9 +28,9 @@ class AddSubVerilogTest extends AnyFlatSpec {
                 val dataBU = B.toBigInt
                 val dataAS = A.toSignBigInt(Width)
                 val dataBS = B.toSignBigInt(Width)
-                val sumU = sum.toBigInt
-                val sumS = sum.toSignBigInt(Width)
-                val MAX = BigInt(2).pow(Width)
+                val sumU   = sum.toBigInt
+                val sumS   = sum.toSignBigInt(Width)
+                val MAX    = BigInt(2).pow(Width)
                 println("------------------------------------")
                 println(addSub.toBoolean)
                 println("carryIn: " + carryIn.toBigInt)
@@ -39,34 +41,33 @@ class AddSubVerilogTest extends AnyFlatSpec {
                 println("dataBS: " + dataBS)
                 println("sumS: " + sumS)
 
-                if(addSub.toBoolean){// sub
-                    if(overflow.toBoolean){
-                        if(dataBS >= 0){
+                if (addSub.toBoolean) { // sub
+                    if (overflow.toBoolean) {
+                        if (dataBS >= 0) {
                             assert(sumS == MAX + dataAS - dataBS - carryIn.toBigInt)
-                        }else{
+                        } else {
                             assert(sumS == dataAS - dataBS - carryIn.toBigInt - MAX)
                         }
-                    }else{
+                    } else {
                         assert(sumS == dataAS - dataBS - carryIn.toBigInt) // pass
                     }
-                }else{// add
-                    if(carryOut.toBoolean){
+                } else { // add
+                    if (carryOut.toBoolean) {
                         assert(sumU == dataAU + dataBU + carryIn.toBigInt - MAX) //pass
-                    }else{
+                    } else {
                         assert(sumU == dataAU + dataBU + carryIn.toBigInt) //pass
                     }
-                    if(overflow.toBoolean){
-                        if(dataAS > 0 || dataBS > 0){
+                    if (overflow.toBoolean) {
+                        if (dataAS > 0 || dataBS > 0) {
                             assert(sumS == carryIn.toBigInt + dataAS + dataBS - MAX) //pass
-                        }else{
+                        } else {
                             assert(sumS == carryIn.toBigInt + dataAU + dataBU - MAX) //pass
                         }
-                    }else{
+                    } else {
                         assert(sumS == dataAS + dataBS + carryIn.toBigInt) //pass
                     }
                 }
             }
-            }
-
+        }
     }
 }

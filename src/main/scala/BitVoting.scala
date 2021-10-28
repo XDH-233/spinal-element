@@ -12,32 +12,30 @@ case class BitVoting(width: Int) extends Component{
         val unanimityOnes, unanimityZeros, majority, minority = out Bool()
         val tie = if(width % 2 == 0) out Bool() else null
     }
-    noIoPrefix()
-    import io._
 
-    unanimityOnes.clear()
-    unanimityZeros.clear()
-    majority.clear()
-    minority.clear()
+    io.unanimityOnes.clear()
+    io.unanimityZeros.clear()
+    io.majority.clear()
+    io.minority.clear()
     if(width % 2 ==0)
-        tie.clear()
+        io.tie.clear()
     val popCount = PopulationCount(width)
-    popCount.io.wordIn := wordIn
+    popCount.io.wordIn := io.wordIn
     when(popCount.io.countOut === width){
-        unanimityOnes.set()
+        io.unanimityOnes.set()
     }
     when(popCount.io.countOut === 0){
-        unanimityZeros.set()
+        io.unanimityZeros.set()
     }
     when(popCount.io.countOut.asUInt >= width / 2 + 1){
-        majority.set()
+        io.majority.set()
     }
     when(popCount.io.countOut.asUInt <= width - width / 2 - 1){
-        minority.set()
+        io.minority.set()
     }
     if(width % 2== 0){
         when(popCount.io.countOut=== width / 2){
-            tie.set()
+            io.tie.set()
         }
     }
 }

@@ -12,16 +12,14 @@ case class WordReducer(wordWidth: Int, wordCount: Int, op: reducerOp.Value) exte
         val wordsIn = in Bits(wordWidth * wordCount bits)
         val wordOut = out Bits(wordWidth bits)
     }
-    noIoPrefix()
-    import io._
 
     // Should I take Map in count ?
     op match {
-        case reducerOp.AND => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce(_ & _)
-        case reducerOp.NAND => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l,r) => ~(l & r))
-        case reducerOp.OR => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits)map(_.asBits)).reduce(_ | _)
-        case reducerOp.NOR => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l,r) => ~(l | r))
-        case reducerOp.XOR => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce(_ ^ _)
-        case reducerOp.XNOR => wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l,r) => ~(l ^ r))
+        case reducerOp.AND => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce(_ & _)
+        case reducerOp.NAND => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l,r) => ~(l & r))
+        case reducerOp.OR => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits)map(_.asBits)).reduce(_ | _)
+        case reducerOp.NOR => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l,r) => ~(l | r))
+        case reducerOp.XOR => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce(_ ^ _)
+        case reducerOp.XNOR => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l,r) => ~(l ^ r))
     }
 }

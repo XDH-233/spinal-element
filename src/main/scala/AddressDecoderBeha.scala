@@ -13,7 +13,6 @@ case class AddressDecoderBeha(addrWidth: Int) extends Component{
         val addr = in UInt(addrWidth bits)
         val hit = out Bool()
     }
-    noIoPrefix()
 
     io.hit := (io.addr >= io.baseAddr) && (io.addr <= io.boundAddr)
 }

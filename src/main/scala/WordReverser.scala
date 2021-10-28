@@ -11,9 +11,7 @@ case class WordReverser(wordWidth: Int, wordCount: Int) extends Component{
         val wordsIn = in Bits(wordWidth * wordCount bits)
         val wordsOut = out Vec(Bits(wordWidth bits), wordCount)
     }
-    noIoPrefix()
-    import io._
 
-    wordsOut.zip(Vec(wordsIn.subdivideIn(wordWidth bits).reverse.map(_.asBits))).foreach{case(o, i)=> o:=i}
+    io.wordsOut.zip(Vec(io.wordsIn.subdivideIn(wordWidth bits).reverse.map(_.asBits))).foreach{case(o, i)=> o:=i}
 }
 

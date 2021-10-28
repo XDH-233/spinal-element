@@ -12,4 +12,4 @@ set -o xtrace
 #sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'
 #sbt clean coverage coverageReport test
 sbt clean
-sbt clean compile "testOnly ArithmeticPredicatesBinTest AdderSubtractorBinTest"
+sbt clean compile "testOnly WidthAdjusterTest"

@@ -12,14 +12,8 @@ case class MultiplexerBinaryBehavioural(wordWidth: Int, inputCount: Int) extends
         val wordsIn = in Bits(wordWidth * inputCount bits)
         val wordOut = out Bits(wordWidth bits)
     }
-    noIoPrefix()
-    import io._
 
-    wordOut := Vec(wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).read(selector)
-
-
-
-
+    io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).read(io.selector)
 }
 // verilog source code in http://fpgacpu.ca/fpga/Multiplexer_Binary_Behavioural.v
 case class Multiplexer_Binary_Behavioural(wordWidth: Int, addrWidth: Int, inputCount: Int) extends BlackBox{

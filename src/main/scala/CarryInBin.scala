@@ -11,8 +11,6 @@ case class CarryInBin(width: Int) extends Component{
         val A , B, sum = in Bits(width bits)
         val carryIn = out Bits (width bits)
     }
-    noIoPrefix()
-    import io._
-    carryIn := A ^ B ^ sum
+    io.carryIn := io.A ^ io.B ^ io.sum
 
 }

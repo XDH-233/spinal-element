@@ -15,17 +15,15 @@ case class AdderSubtractorBin(width: Int) extends Component{
         val overflow = out Bool()
         val carryOut = out Bool()
     }
-    noIoPrefix()
-
 
     val widthAdU = WidthAdjuster(1, width, sign = false)
     val widthAdS = WidthAdjuster(1, width, sign = true)
-    widthAdU.originalInput := io.carryIn.asBits
-    widthAdS.originalInput := io.carryIn.asBits
+    widthAdU.io.originalInput := io.carryIn.asBits
+    widthAdS.io.originalInput := io.carryIn.asBits
 
     val BSelected            = Mux(io.addOrSub, ~io.B, io.B)
     val negationOffset: UInt = Mux(io.addOrSub, U(1, width bits), U(0, width bits))
-    val carryInSelected = Mux(io.addOrSub, widthAdS.adjustedOutput, widthAdU.adjustedOutput)
+    val carryInSelected = Mux(io.addOrSub, widthAdS.io.adjustedOutput, widthAdU.io.adjustedOutput)
 
     val res = Bits(width + 1 bits)
     res := (io.A.resize(width + 1).asUInt + BSelected.resize(width + 1).asUInt + negationOffset.resize(width + 1) + carryInSelected.asSInt.resize(width + 1).asUInt).asBits
@@ -39,7 +37,7 @@ case class AdderSubtractorBin(width: Int) extends Component{
     carryInB.io.sum := io.sum
     io.carries:= carryInB.io.carryIn
 }
-// souce code in http://fpgacpu.ca/fpga/Adder_Subtractor_Binary.html
+//verilog souce code in http://fpgacpu.ca/fpga/Adder_Subtractor_Binary.html
 case class Adder_Subtractor_Binary(width: Int) extends BlackBox{
     addGenerics(("WORD_WIDTH", width))
     val add_sub = in Bool()
@@ -53,7 +51,7 @@ case class Adder_Subtractor_Binary(width: Int) extends BlackBox{
     addRTLPath("./src/verilog/CarryIn_Binary.v")
 }
 
-case class addSubVerilog(W: Int) extends Component{
+case class AddSubVerilog(W: Int) extends Component{
     val addSub = in Bool()
     val carryIn = in Bool()
     val A, B = in Bits(W bits)

@@ -26,8 +26,6 @@ case class PipeSkidBuffer(width: Int) extends Component {
         val Input  = slave Stream (Bits(width bits))
         val Output = master Stream (Bits(width bits))
     }
-    noIoPrefix()
-    import io._
 
     // Regs
     val InReadyReg  = Reg(Bool()) init (True)
@@ -35,37 +33,37 @@ case class PipeSkidBuffer(width: Int) extends Component {
     val dataOut     = Reg(Bits(width bits)) init (0)
     val dataBuf     = Reg(Bits(width bits)) init (0)
 
-    Input.ready := InReadyReg
-    Output.payload := dataOut
-    Output.valid := OutValidReg
+    io.Input.ready := InReadyReg
+    io.Output.payload := dataOut
+    io.Output.valid := OutValidReg
     val FSM = new StateMachine{
         val Empty = new State with EntryPoint
         val Busy = new State
         val Full = new State
         Empty.whenIsActive{
-            when(Input.fire && ~Output.fire){ // load
-                dataOut := Input.payload
+            when(io.Input.fire && ~io.Output.fire){ // load
+                dataOut := io.Input.payload
                 InReadyReg := True
                 OutValidReg := True
                 goto(Busy)
             }
         }
         Busy.whenIsActive{
-            when(Input.fire && (~Output.fire)){ // fill
-                dataBuf := Input.payload
+            when(io.Input.fire && (~io.Output.fire)){ // fill
+                dataBuf := io.Input.payload
                 InReadyReg := False
                 OutValidReg := True
                 goto(Full)
-            }elsewhen((~Input.fire) && Output.fire){ // unload
+            }elsewhen((~io.Input.fire) && io.Output.fire){ // unload
                 InReadyReg := True
                 OutValidReg := False
                 goto(Empty)
-            }elsewhen(Input.fire && Output.fire){ // flow
-                dataOut := Input.payload
+            }elsewhen(io.Input.fire && io.Output.fire){ // flow
+                dataOut := io.Input.payload
             }
         }
         Full.whenIsActive{
-            when((~Input.fire) && Output.fire){ // flush
+            when((~io.Input.fire) && io.Output.fire){ // flush
                 dataOut := dataBuf
                 InReadyReg := True
                 OutValidReg := True
@@ -77,7 +75,7 @@ case class PipeSkidBuffer(width: Int) extends Component {
 }
 
 
-case class validReadyPipe(width: Int) extends Component {
+case class ValidReadyPipe(width: Int) extends Component {
     val Input  = slave Stream (Bits(width bits))
     val Output = master Stream (Bits(width bits))
     Output <-/< Input

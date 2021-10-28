@@ -13,16 +13,14 @@ case class BitShifter(width: Int) extends Component{
         val wordIn, wordInLeft, wordInRight = in Bits(width bits)
         val wordOut, wordOutLeft, wordOutRight = out Bits(width bits)
     }
-    noIoPrefix()
-    import io._
 
     val tmp = Bits(width * 3 bits)
-    when(shiftDirection){
-        tmp := (wordInLeft ## wordIn ## wordInRight) |>> shiftAmount
+    when(io.shiftDirection){
+        tmp := (io.wordInLeft ## io.wordIn ## io.wordInRight) |>> io.shiftAmount
     }otherwise{
-        tmp := (wordInLeft ## wordIn ## wordInRight) |<< shiftAmount
+        tmp := (io.wordInLeft ## io.wordIn ## io.wordInRight) |<< io.shiftAmount
     }
-    wordOutLeft := tmp(width * 3- 1 downto width * 2)
-    wordOut := tmp(width * 2 - 1 downto width)
-    wordOutRight := tmp(width - 1 downto 0)
+    io.wordOutLeft := tmp(width * 3- 1 downto width * 2)
+    io.wordOut := tmp(width * 2 - 1 downto width)
+    io.wordOutRight := tmp(width - 1 downto 0)
 }

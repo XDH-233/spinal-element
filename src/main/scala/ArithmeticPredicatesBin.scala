@@ -11,26 +11,24 @@ case class ArithmeticPredicatesBin(wordWidth: Int) extends Component{
         val A, B = in Bits(wordWidth bits)
         val eq_, ltU, lteU, gtU, gteU,   ltS, lteS, gtS, gteS = out Bool()
     }
-    noIoPrefix()
-    import io._
     val adderSub = AdderSubtractorBin(wordWidth)
     adderSub.io.addOrSub := True // sub
     adderSub.io.carryIn := False
-    adderSub.io.A := A
-    adderSub.io.B := B
+    adderSub.io.A := io.A
+    adderSub.io.B := io.B
     val diff = adderSub.io.sum
     val negtive = adderSub.io.sum.msb
 
-    eq_ := diff === 0
-    ltU := ~adderSub.io.carryOut //
-    lteU := (eq_ || ltU)
-    gtU := adderSub.io.carryOut && ~eq_
-    gteU := eq_ || gtU
+    io.eq_ := diff === 0
+    io.ltU := ~adderSub.io.carryOut //
+    io.lteU := (io.eq_ || io.ltU)
+    io.gtU := adderSub.io.carryOut && ~io.eq_
+    io.gteU := io.eq_ || io.gtU
 
-    ltS := negtive =/= adderSub.io.overflow
-    lteS := eq_ || ltS
-    gtS := (negtive === adderSub.io.overflow ) && ~eq_
-    gteS := gtS || eq_
+    io.ltS := negtive =/= adderSub.io.overflow
+    io.lteS := io.eq_ || io.ltS
+    io.gtS := (negtive === adderSub.io.overflow ) && ~io.eq_
+    io.gteS := io.gtS || io.eq_
 }
 
 

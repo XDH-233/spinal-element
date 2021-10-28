@@ -13,21 +13,19 @@ case class DemultiplexerOneHot(wordWidth: Int, outputCount: Int, broadcast: Bool
         val wordsOut = out Bits(wordWidth * outputCount bits)
         val validsOut = out Bits(outputCount bits)
     }
-    noIoPrefix()
-    import io._
 
-    validsOut := selectors
+    io.validsOut := io.selectors
     if(broadcast){
         val wordOutVec = Vec(Bits(wordWidth bits), outputCount)
-        wordOutVec.foreach(_:=wordIn)
-        wordsOut := wordOutVec.reduce(_ ## _)
+        wordOutVec.foreach(_:= io.wordIn)
+        io.wordsOut := wordOutVec.reduce(_ ## _)
     }
     else{
         val annullerArr = Array.fill(outputCount)(Annuller(wordWidth, implementation.AND))
         annullerArr.zipWithIndex.foreach{case(ann, index)=>
-            ann.annul := ~selectors(index)
-            ann.dataIn := wordIn
-            wordsOut((index + 1) * wordWidth - 1 downto index * wordWidth) := ann.dataOut
+            ann.io.annul := ~io.selectors(index)
+            ann.io.dataIn := io.wordIn
+            io.wordsOut((index + 1) * wordWidth - 1 downto index * wordWidth) := ann.io.dataOut
         }
     }
 }

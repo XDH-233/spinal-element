@@ -12,14 +12,12 @@ case class MuxB2to1(width: Int) extends Component {
         val wordIn0, wordIn1, bitmask = in Bits (width bits)
         val wordOut                   = out Bits (width bits)
     }
-    noIoPrefix()
-    import io._
 
     val muxBinBehavArr            = Array.fill(width)(MuxBinBehavVerilog(1, 2))
     muxBinBehavArr.zipWithIndex.foreach { case (mux, index) =>
-        mux.selector := bitmask(index).asUInt(1 bits)
-        mux.words_in := (wordIn1(index) ## wordIn0(index))
-        wordOut(index) := mux.word_out.asBool
+        mux.selector := io.bitmask(index).asUInt(1 bits)
+        mux.words_in := (io.wordIn1(index) ## io.wordIn0(index))
+        io.wordOut(index) := mux.word_out.asBool
     }
 }
 

@@ -10,5 +10,6 @@ simWorkspace
 target
 tmp
 .Xil
+*.tar.gz
 
 /home/xdh/IdeaProjects/spinal-element/*.v

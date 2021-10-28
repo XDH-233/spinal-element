@@ -11,8 +11,6 @@ case class BinaryToOneHot(binaryWidth: Int, outputWidth: Int) extends Component{
         val binaryIn = in Bits(binaryWidth bits)
         val oneHotOut = out Bits(outputWidth bits)
     }
-    noIoPrefix()
-    import io._
 
     var addrWidth = log2Up(outputWidth)
     if(binaryWidth > log2Up(outputWidth))
@@ -21,8 +19,8 @@ case class BinaryToOneHot(binaryWidth: Int, outputWidth: Int) extends Component{
     addrDecoBehaArr.zipWithIndex.foreach{case(dec, index)=>
         dec.io.baseAddr := index
         dec.io.boundAddr := index
-        dec.io.addr := binaryIn.resize(addrWidth).asUInt
-        oneHotOut(index) := dec.io.hit
+        dec.io.addr := io.binaryIn.resize(addrWidth).asUInt
+        io.oneHotOut(index) := dec.io.hit
     }
 }
 

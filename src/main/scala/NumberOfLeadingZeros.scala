@@ -11,11 +11,9 @@ case class NumberOfLeadingZeros(width: Int) extends Component{
         val wordIn = in Bits(width bits)
         val wordOut = out Bits(log2Up(width) + 1 bits)
     }
-    noIoPrefix()
-    import io._
 
     val trailingZeros = NumberOfTrailingZeros(width)
-    trailingZeros.io.wordIn := wordIn.reversed
-    wordOut := trailingZeros.io.wordOut
+    trailingZeros.io.wordIn := io.wordIn.reversed
+    io.wordOut := trailingZeros.io.wordOut
 }
 

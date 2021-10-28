@@ -13,15 +13,13 @@ case class DemultiplexerBinary(wordWidth: Int, outputCount: Int, broadcast: Bool
         val wordsOut = out Bits(wordWidth * outputCount bits)
         val validsOut = out Bits(outputCount bits)
     }
-    noIoPrefix()
-    import io._
 
     val binToOneHot = BinaryToOneHot(log2Up(outputCount), outputCount)
-    binToOneHot.io.binaryIn := selector.asBits
+    binToOneHot.io.binaryIn := io.selector.asBits
     val demuxOneHot = DemultiplexerOneHot(wordWidth, outputCount, broadcast)
-    demuxOneHot.io.wordIn := wordIn
+    demuxOneHot.io.wordIn := io.wordIn
     demuxOneHot.io.selectors := binToOneHot.io.oneHotOut
-    validsOut := demuxOneHot.io.validsOut
-    wordsOut := demuxOneHot.io.wordsOut
+    io.validsOut := demuxOneHot.io.validsOut
+    io.wordsOut := demuxOneHot.io.wordsOut
 }
 
