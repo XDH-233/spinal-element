@@ -31,16 +31,6 @@ class AddSubVerilogTest extends AnyFlatSpec {
                 val sumU   = sum.toBigInt
                 val sumS   = sum.toSignBigInt(Width)
                 val MAX    = BigInt(2).pow(Width)
-                println("------------------------------------")
-                println(addSub.toBoolean)
-                println("carryIn: " + carryIn.toBigInt)
-                println("dataAU: " + dataAU)
-                println("dataBU: " + dataBU)
-                println("sumU: " + sumU)
-                println("dataAS: " + dataAS)
-                println("dataBS: " + dataBS)
-                println("sumS: " + sumS)
-
                 if (addSub.toBoolean) { // sub
                     if (overflow.toBoolean) {
                         if (dataBS >= 0) {

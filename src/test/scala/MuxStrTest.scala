@@ -6,8 +6,8 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class MuxStrTest extends AnyFlatSpec {
-    for (w <- 1 to 32) {
-        for (c <- 2 until 16) {
+    for (w <- 1 to 7) {
+        for (c <- 2 until 9) {
             s"width: ${w}, count: ${c} input" should "work right" in simNow(w, c)
         }
     }
@@ -30,10 +30,7 @@ class MuxStrTest extends AnyFlatSpec {
                     sleep(1)
                     val dataInArr = wordsIn.toBigInt.divide(W, C)
                     val sel       = selector.toInt
-                    println(dataInArr.mkString(" "))
-                    println(sel)
-                    println(wordOut.toBigInt)
-                    var gold = BigInt(0)
+                    var gold      = BigInt(0)
                     if (sel < C) {
                         gold = dataInArr(sel)
                     }

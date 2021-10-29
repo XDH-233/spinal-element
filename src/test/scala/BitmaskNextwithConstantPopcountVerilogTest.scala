@@ -1,17 +1,16 @@
-import org.scalatest.funsuite.AnyFunSuite
-import spinal.core
+import org.scalatest.flatspec.AnyFlatSpec
 import spinal.core._
 import spinal.sim._
 import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class BitmaskNextwithConstantPopcountVerilogTest extends AnyFunSuite {
-    simNow(8)
+import scala.Console.in
 
-    //    for(w <- 1 to 8){
-    //        s"${w} bits input BitmaskNextwithConstantPopcount" should "work correctly" in simNow(w)
-    //    }
+class BitmaskNextwithConstantPopcountVerilogTest extends AnyFlatSpec {
+    for (w <- 2 to 8) {
+        s"${w} bits input BitmaskNextwithConstantPopcount" should "work correctly" in simNow(w)
+    }
     def simNow(W: Int) = {
         SimConfig.withWave
             .compile {
@@ -23,7 +22,6 @@ class BitmaskNextwithConstantPopcountVerilogTest extends AnyFunSuite {
                 import dut._
                 import io._
                 import lib.simSupport._
-                wordIn #= BigInt("11111111", 2)
                 sleep(1)
                 for (s <- 0 until 1000) {
                     wordIn.randomize()
@@ -50,10 +48,6 @@ class BitmaskNextwithConstantPopcountVerilogTest extends AnyFunSuite {
                     if (!got) { // void
                         assert(dataOut === BigInt(2).pow(W) - 1, "void")
                     } else {
-                        println(got)
-                        println(gold)
-                        println("gold: " + gold.toBinaryString(W))
-                        println("get:  " + io.wordOut.toBigInt.toBinaryString(W))
                         assert((dataOut == gold || io.wordOut == ()), "not void")
                     }
                 }

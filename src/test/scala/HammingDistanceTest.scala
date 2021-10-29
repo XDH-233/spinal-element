@@ -32,8 +32,6 @@ class HammingDistanceTest extends AnyFlatSpec {
                         if (A.testBit(w) ^ B.testBit(w))
                             dist += 1
                     }
-                    println(A.toBinaryString(W))
-                    println(B.toBinaryString(W))
                     assert(distance.toInt == dist)
                 }
             }

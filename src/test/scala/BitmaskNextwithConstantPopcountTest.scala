@@ -6,15 +6,13 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class BitmaskNextwithConstantPopcountTest extends AnyFlatSpec {
-    simNow(8)
-
-    //    for(w <- 1 to 8){
-    //        s"${w} bits input BitmaskNextwithConstantPopcount" should "work correctly" in simNow(w)
-    //    }
+    for (w <- 2 to 8) {
+        s"${w} bits input BitmaskNextwithConstantPopcount" should "work correctly" in simNow(w)
+    }
     def simNow(W: Int) = {
         SimConfig.withWave
             .compile {
-                val dut = new BitmaskNextwithConstantPopcountVerilog(W)
+                val dut = new BitmaskNextwithConstantPopcount(W)
 
                 dut
             }
@@ -22,8 +20,6 @@ class BitmaskNextwithConstantPopcountTest extends AnyFlatSpec {
                 import dut._
                 import io._
                 import lib.simSupport._
-                wordIn #= BigInt("11111111", 2)
-                sleep(1)
                 for (s <- 0 until 1000) {
                     wordIn.randomize()
                     sleep(1)
@@ -49,10 +45,6 @@ class BitmaskNextwithConstantPopcountTest extends AnyFlatSpec {
                     if (!got) { // void
                         assert(dataOut === BigInt(2).pow(W) - 1, "void")
                     } else {
-                        println(got)
-                        println(gold)
-                        println("gold: " + gold.toBinaryString(W))
-                        println("get:  " + io.wordOut.toBigInt.toBinaryString(W))
                         assert((dataOut == gold || io.wordOut == ()), "not void")
                     }
                 }
