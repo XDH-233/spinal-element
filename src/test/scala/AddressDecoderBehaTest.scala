@@ -6,27 +6,29 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class AddressDecoderBehaTest extends AnyFlatSpec {
-    for(i <- 1 to 16){
+    for (i <- 1 to 16) {
         s"${i} bits input" should "work right " in simNow(i)
     }
-    def simNow(W: Int)={
-        SimConfig.withWave.compile{
-            val dut = new AddressDecoderBeha((W))
+    def simNow(W: Int) = {
+        SimConfig.withWave
+            .compile {
+                val dut = new AddressDecoderBeha((W))
 
-            dut
-        }.doSim{dut=>
-            import dut._
-            import dut.io._
-            for(s <- 0 until 1000){
-                baseAddr.randomize()
-                boundAddr.randomize()
-                addr.randomize()
-                sleep(1)
-                val base = baseAddr.toBigInt
-                val bound = boundAddr.toBigInt
-                val Addr = addr.toBigInt
-                assert(hit.toBoolean ==((Addr >= base) && (Addr <= bound)))
+                dut
             }
-        }
+            .doSim { dut =>
+                import dut._
+                import dut.io._
+                for (s <- 0 until 1000) {
+                    baseAddr.randomize()
+                    boundAddr.randomize()
+                    addr.randomize()
+                    sleep(1)
+                    val base  = baseAddr.toBigInt
+                    val bound = boundAddr.toBigInt
+                    val Addr  = addr.toBigInt
+                    assert(hit.toBoolean == ((Addr >= base) && (Addr <= bound)))
+                }
+            }
     }
 }

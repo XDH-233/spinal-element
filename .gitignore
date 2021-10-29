@@ -5,11 +5,16 @@
 *.so
 *.mk
 *.jou
+*.bin
 *.log
+.scalafmt.conf
 simWorkspace
 target
 tmp
 .Xil
 *.tar.gz
-
+draft.sc
 /home/xdh/IdeaProjects/spinal-element/*.v
+
+.bsp
+.v

@@ -13,9 +13,9 @@ class AddSubVerilogTest extends AnyFlatSpec {
             import dut._
             import lib.simSupport._
 
-            addSub #= true
-            A #= 186
-            B #= 53
+            addSub  #= true
+            A       #= 186
+            B       #= 53
             carryIn #= true
             sleep(1)
             for (s <- 0 until 100) {

@@ -6,15 +6,15 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class MuxB2to1Test extends AnyFlatSpec {
-    for(w <- 1 to 16){
+    for (w <- 1 to 16) {
         s"${w} bits input" should "work right" in simNow(w)
     }
-    def simNow(W: Int)={
-        SimConfig.withWave.compile(new MuxB2to1(8)).doSim{ dut=>
+    def simNow(W: Int) = {
+        SimConfig.withWave.compile(new MuxB2to1(8)).doSim { dut =>
             import dut._
             import io._
 
-            for(s <- 0 until 1000){
+            for (s <- 0 until 1000) {
                 wordIn0.randomize()
                 wordIn1.randomize()
                 bitmask.randomize()
@@ -22,9 +22,9 @@ class MuxB2to1Test extends AnyFlatSpec {
 
                 val word0 = wordIn0.toBigInt
                 val word1 = wordIn1.toBigInt
-                val mask = bitmask.toBigInt
-                for(w <- 0 until W){
-                    val selRes = if(mask.testBit(w)) word1.testBit(w) else word0.testBit(w)
+                val mask  = bitmask.toBigInt
+                for (w <- 0 until W) {
+                    val selRes = if (mask.testBit(w)) word1.testBit(w) else word0.testBit(w)
                     assert(wordOut.toBigInt.testBit(w) == selRes)
                 }
             }

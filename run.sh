@@ -9,7 +9,7 @@ set -o xtrace
 
 #touch build.sbt
 #touch .scalafmt.conf
-#sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'
-#sbt clean coverage coverageReport test
-sbt clean
-sbt clean compile "testOnly WidthAdjusterTest"
+sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'
+##sbt clean coverage coverageReport test
+#sbt clean
+#sbt clean compile "testOnly MuxStrTest CarryInBinTest AddressDecoderArithmeticTest AddressDecoderStaticTest AddressTranslatorArithmeticTest AddressTranslatorStaticTest Bitmask0BitAtRightmost1BitTest Bitmask1BitAtRightmost0BitTest BitmaskIsolateRightmost1BitTest"

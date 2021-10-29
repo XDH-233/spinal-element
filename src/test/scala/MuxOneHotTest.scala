@@ -13,28 +13,30 @@ class MuxOneHotTest extends AnyFlatSpec {
     }
 
     def simNow(W: Int, C: Int) = {
-        SimConfig.compile {
-            val dut = new MuxOneHot(W, C)
+        SimConfig
+            .compile {
+                val dut = new MuxOneHot(W, C)
 
-            dut
-        }.doSim { dut =>
-            import dut._
-            import lib.simSupport._
-            import io._
-
-            for (s <- 0 until 1000) {
-                selectors #= oneHot(C)
-                wordsIn.randomize()
-                sleep(1)
-                val dataInArr = wordsIn.toBigInt.divide(W, C)
-                var sel       = 0
-                val selIn     = selectors.toBigInt
-                for (i <- 0 until C) {
-                    if (selIn.testBit(i))
-                        sel = i
-                }
-                assert(wordOut.toBigInt == dataInArr(sel))
+                dut
             }
-        }
+            .doSim { dut =>
+                import dut._
+                import lib.simSupport._
+                import io._
+
+                for (s <- 0 until 1000) {
+                    selectors #= oneHot(C)
+                    wordsIn.randomize()
+                    sleep(1)
+                    val dataInArr = wordsIn.toBigInt.divide(W, C)
+                    var sel       = 0
+                    val selIn     = selectors.toBigInt
+                    for (i <- 0 until C) {
+                        if (selIn.testBit(i))
+                            sel = i
+                    }
+                    assert(wordOut.toBigInt == dataInArr(sel))
+                }
+            }
     }
 }

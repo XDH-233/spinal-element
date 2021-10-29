@@ -6,12 +6,12 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class reducerNotTopTest extends AnyFlatSpec {
-    SimConfig.withWave.compile(new reducerNotTop()).doSim{dut=>
+    SimConfig.withWave.compile(new reducerNotTop()).doSim { dut =>
         import dut._
-        for(s <- 0 until 1000){
+        for (s <- 0 until 1000) {
             data_in.randomize()
             sleep(1)
-            assert(NOR.toBoolean == N_OR.toBoolean)
+            assert(NOR.toBoolean  == N_OR.toBoolean)
             assert(NXOR.toBoolean == N_XOR.toBoolean)
             assert(NAND.toBoolean == N_AND.toBoolean)
         }

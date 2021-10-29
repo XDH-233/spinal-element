@@ -13,42 +13,43 @@ class NumberOfTrailingZerosTest extends AnyFlatSpec {
 //        }
     }
 
+    def simNow(W: Int) = {
+        SimConfig.withWave
+            .compile {
+                val dut = new NumberOfTrailingZeros(W)
+                dut.all_log.simPublic()
+                dut.lsb1.simPublic()
+                dut
+            }
+            .doSim { dut =>
+                import dut._
+                import lib.simSupport._
+                import io._
 
-    def simNow(W: Int)={
-        SimConfig.withWave.compile{
-            val dut = new NumberOfTrailingZeros(W)
-            dut.all_log.simPublic()
-            dut.lsb1.simPublic()
-            dut
-        }.doSim{dut=>
-            import dut._
-            import lib.simSupport._
-            import io._
-
-            wordIn #= 0
-            sleep(1)
-            for(s <- 0 until 1000){
-                wordIn.randomize()
+                wordIn #= 0
                 sleep(1)
-                val dataIn = wordIn.toBigInt
-                val allLog = all_log.toBigInt.divide(log2Up(W), W)
-                val printBlock = {
+                for (s <- 0 until 1000) {
+                    wordIn.randomize()
+                    sleep(1)
+                    val dataIn = wordIn.toBigInt
+                    val allLog = all_log.toBigInt.divide(log2Up(W), W)
+                    val printBlock = {
 //                    println("-------------------------------")
 //                    println("wordIn: " + dataIn.toString(2))
 //                    println("lsb1: " + lsb1.toBigInt.toString(2))
 //                    println(allLog.mkString(" "))
 //                    println("wordOut: " + wordOut.toBigInt)
-                }
-                var count = 0
-                var addNum = 1
-                for(b <- 0 until width){
-                    if(dataIn.testBit(b)) {
-                        addNum = 0
                     }
-                    count += addNum
+                    var count  = 0
+                    var addNum = 1
+                    for (b <- 0 until width) {
+                        if (dataIn.testBit(b)) {
+                            addNum = 0
+                        }
+                        count += addNum
+                    }
+                    assert(wordOut.toInt == count)
                 }
-                assert(wordOut.toInt == count)
             }
-        }
     }
 }

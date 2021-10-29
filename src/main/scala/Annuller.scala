@@ -6,17 +6,17 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-object implementation extends  Enumeration{
+object implementation extends Enumeration {
     type way = Value
     val MUX, AND = Value
 
 }
 
-case class Annuller(width: Int, impWay: implementation.Value) extends Component{
-    val io = new Bundle{
-        val annul = in Bool()
-        val dataIn = in Bits(width bits)
-        val dataOut = out Bits(width bits)
+case class Annuller(width: Int, impWay: implementation.Value) extends Component {
+    val io = new Bundle {
+        val annul   = in Bool ()
+        val dataIn  = in Bits (width bits)
+        val dataOut = out Bits (width bits)
     }
 
     impWay match {
@@ -28,5 +28,3 @@ case class Annuller(width: Int, impWay: implementation.Value) extends Component{
         }
     }
 }
-
-

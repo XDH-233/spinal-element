@@ -11,26 +11,28 @@ class NumberOfLeadingZerosTest extends AnyFlatSpec {
     }
 
     def simNow(W: Int) = {
-        SimConfig.compile {
-            val dut = new NumberOfLeadingZeros(W)
+        SimConfig
+            .compile {
+                val dut = new NumberOfLeadingZeros(W)
 
-            dut
-        }.doSim { dut =>
-            import dut._
-            import io._
+                dut
+            }
+            .doSim { dut =>
+                import dut._
+                import io._
 
-            for (s <- 0 until 1000) {
-                wordIn.randomize()
-                sleep(1)
-                val dataIn = wordIn.toBigInt
-                var count  = 0
-                var addNum = 1
-                for (w <- (0 until W).reverse) {
-                    if (dataIn.testBit(w))
-                        addNum = 0
-                    count += addNum
+                for (s <- 0 until 1000) {
+                    wordIn.randomize()
+                    sleep(1)
+                    val dataIn = wordIn.toBigInt
+                    var count  = 0
+                    var addNum = 1
+                    for (w <- (0 until W).reverse) {
+                        if (dataIn.testBit(w))
+                            addNum = 0
+                        count += addNum
+                    }
                 }
             }
-        }
     }
 }
