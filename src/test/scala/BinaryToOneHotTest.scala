@@ -6,8 +6,8 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class BinaryToOneHotTest extends AnyFlatSpec {
-    for (i <- 1 to 16) {
-        for (o <- 1 to 16) {
+    for (i <- 1 to 8) {
+        for (o <- 1 to 8) {
             s"input width: ${i}, output width: ${o}" should " work right" in simNow(i, o)
         }
     }
@@ -20,10 +20,10 @@ class BinaryToOneHotTest extends AnyFlatSpec {
             }
             .doSim { dut =>
                 import dut._
-                import lib.simSupport.oneHot
+                import lib.simSupport._
                 import dut.io._
                 for (s <- 0 until 1000) {
-                    binaryIn #= oneHot(inWidth)
+                    binaryIn.randomOneHot
                     sleep(1)
                     val dataIn = binaryIn.toInt
                     var gold   = BigInt(0)

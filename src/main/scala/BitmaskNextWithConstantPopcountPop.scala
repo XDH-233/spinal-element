@@ -4,7 +4,7 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-case class BitmaskNextwithConstantPopcount(width: Int) extends Component {
+case class BitmaskNextWithConstantPopcountPop(width: Int) extends Component {
     val io = new Bundle {
         val wordIn  = in Bits (width bits)
         val wordOut = out Bits (width bits)
@@ -22,7 +22,7 @@ case class BitmaskNextwithConstantPopcount(width: Int) extends Component {
         AdderSubtractorBin(width = width, addOrSub = True, carryIn = False, A = calcChangedBits.io.distance.resize(width), B = distanceAdjustment)
 
     val calcShiftedOnes = BitShifter(
-        Width          = width,
+        width          = width,
         shiftDirection = False,
         shiftAmount    = calcAdjustedDistance.io.sum.resize(log2Up(width) + 1).asUInt,
         wordIn         = B(1, width bits),

@@ -22,3 +22,11 @@ case class WordReducer(wordWidth: Int, wordCount: Int, op: reducerOp.Value) exte
         case reducerOp.XNOR => io.wordOut := Vec(io.wordsIn.subdivideIn(wordWidth bits).map(_.asBits)).reduce((l, r) => ~(l ^ r))
     }
 }
+
+object WordReducer {
+    def applay(wordWidth: Int, wordCount: Int, op: reducerOp.Value, wordsIn: Bits) = {
+        val ret = WordReducer(wordWidth, wordCount, op)
+        ret.io.wordsIn := wordsIn
+        ret
+    }
+}

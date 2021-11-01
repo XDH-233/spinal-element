@@ -5,14 +5,14 @@ import spinal.core.sim._
 import spinal.lib._
 import spinal.lib.fsm._
 
-class BitmaskNextwithConstantPopcountTest extends AnyFlatSpec {
+class BitmaskNextWithConstantPopcountNtzTest extends AnyFlatSpec {
     for (w <- 2 to 8) {
-        s"${w} bits input BitmaskNextwithConstantPopcount" should "work correctly" in simNow(w)
+        s"${w} bits input BitmaskNextwithConstantPopcountPop" should "work correctly" in simNow(w)
     }
     def simNow(W: Int) = {
         SimConfig.withWave
             .compile {
-                val dut = new BitmaskNextwithConstantPopcount(W)
+                val dut = new BitmaskNextWithConstantPopcountNtz(W)
 
                 dut
             }
@@ -42,8 +42,8 @@ class BitmaskNextwithConstantPopcountTest extends AnyFlatSpec {
                             }
                         }
                     }
-                    if (!got) { // void
-                        assert(dataOut === BigInt(2).pow(W) - 1, "void")
+                    if (!got) { // void or full
+                        assert(dataOut == BigInt(0) || dataOut == BigInt(2).pow(W) - 1)
                     } else {
                         assert((dataOut == gold || io.wordOut == ()), "not void")
                     }

@@ -8,8 +8,8 @@ import spinal.lib.fsm._
 
 case class BitShifter(width: Int) extends Component {
     val io = new Bundle {
-        val shiftDirection                     = in Bool ()
-        val shiftAmount                        = in UInt (log2Up(width) + 1 bits) // 1->right
+        val shiftDirection                     = in Bool () // 1->right
+        val shiftAmount                        = in UInt (log2Up(width) + 1 bits)
         val wordIn, wordInLeft, wordInRight    = in Bits (width bits)
         val wordOut, wordOutLeft, wordOutRight = out Bits (width bits)
     }
@@ -26,8 +26,8 @@ case class BitShifter(width: Int) extends Component {
 }
 
 object BitShifter {
-    def apply(Width: Int, shiftDirection: Bool, shiftAmount: UInt, wordIn: Bits, wordInLeft: Bits, wordInRight: Bits): BitShifter = {
-        val ret = BitShifter(Width)
+    def apply(width: Int, shiftDirection: Bool, shiftAmount: UInt, wordIn: Bits, wordInLeft: Bits, wordInRight: Bits): BitShifter = {
+        val ret = BitShifter(width)
         ret.io.shiftDirection := shiftDirection
         ret.io.shiftAmount    := shiftAmount
         ret.io.wordIn         := wordIn

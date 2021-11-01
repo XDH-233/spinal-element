@@ -26,10 +26,10 @@ class AddSubVerilogTest extends AnyFlatSpec {
                 sleep(1)
                 val dataAU = A.toBigInt
                 val dataBU = B.toBigInt
-                val dataAS = A.toSignBigInt(Width)
-                val dataBS = B.toSignBigInt(Width)
+                val dataAS = A.toSignBigInt
+                val dataBS = B.toSignBigInt
                 val sumU   = sum.toBigInt
-                val sumS   = sum.toSignBigInt(Width)
+                val sumS   = sum.toSignBigInt
                 val MAX    = BigInt(2).pow(Width)
                 if (addSub.toBoolean) { // sub
                     if (overflow.toBoolean) {

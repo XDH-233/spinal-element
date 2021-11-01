@@ -26,9 +26,9 @@ class ArithmeticPredicatesBinTest extends AnyFlatSpec {
                     B.randomize()
                     sleep(1)
                     val dataAU = A.toBigInt
-                    val dataAS = A.toSignBigInt(W)
+                    val dataAS = A.toSignBigInt
                     val dataBU = B.toBigInt
-                    val dataBS = B.toSignBigInt(W)
+                    val dataBS = B.toSignBigInt
                     assert(eq_.toBoolean  == (dataAU == dataBU), "eq")
                     assert(ltU.toBoolean  == (dataAU < dataBU), "ltU")
                     assert(lteU.toBoolean == (dataAU <= dataBU), "lteU")

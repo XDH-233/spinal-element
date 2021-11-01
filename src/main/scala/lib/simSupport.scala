@@ -45,13 +45,14 @@ object simSupport {
         ret
     }
     implicit class BitsSim(b: Bits) {
-        def toSignBigInt(width: Int): BigInt = {
+        def toSignBigInt: BigInt = {
             val width = b.getWidth
             var ret   = b.toBigInt
             if (ret > BigInt(2).pow(width - 1) - 1)
                 ret = ret - BigInt(2).pow(width)
             return ret
         }
+        def randomOneHot = { b #= BigInt(2).pow(scala.util.Random.nextInt(b.getWidth)) }
     }
 
 }

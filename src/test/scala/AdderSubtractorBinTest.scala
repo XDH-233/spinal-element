@@ -25,10 +25,10 @@ class AdderSubtractorBinTest extends AnyFlatSpec {
                 sleep(1)
                 val dataAU = A.toBigInt
                 val dataBU = B.toBigInt
-                val dataAS = A.toSignBigInt(W)
-                val dataBS = B.toSignBigInt(W)
+                val dataAS = A.toSignBigInt
+                val dataBS = B.toSignBigInt
                 val sumU   = sum.toBigInt
-                val sumS   = sum.toSignBigInt(W)
+                val sumS   = sum.toSignBigInt
                 val MAX    = BigInt(2).pow(W)
                 if (addOrSub.toBoolean) { // sub
                     if (overflow.toBoolean) {

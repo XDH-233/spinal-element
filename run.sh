@@ -10,5 +10,5 @@ set -o xtrace
 
 #sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'  #FiXME
 sbt scalafmtAll
-sbt clean compile "testOnly MuxStrTest CarryInBinTest AddressDecoderArithmeticTest AddressDecoderStaticTest AddressTranslatorArithmeticTest AddressTranslatorStaticTest Bitmask0BitAtRightmost1BitTest Bitmask1BitAtRightmost0BitTest BitmaskIsolateRightmost1BitTest BitmaskNextwithConstantPopcountTest"
-sbt clean coverage coverageReport test
+sbt clean compile "testOnly LogarithmOfPowersOfTwoTest BitmaskNextWithConstantPopcountNtzTest BitmaskThermometerFromCountTest BitmaskThermometerToRightmost0BitTest BitmaskThermometerToRightmost1BitTest BitmaskTurnOffTrailing1BitsTest BitmaskTurnOnTrailing0BitsTest"
+#sbt clean coverage coverageReport test

@@ -21,8 +21,8 @@ class WidthAdjusterTest extends AnyFlatSpec {
                 io.originalInput.randomize()
                 sleep(1)
                 if (O >= I) {
-                    val dataIn  = if (S) originalInput.toSignBigInt(I) else originalInput.toBigInt
-                    val dataOut = if (S) adjustedOutput.toSignBigInt(O) else adjustedOutput.toBigInt
+                    val dataIn  = if (S) originalInput.toSignBigInt else originalInput.toBigInt
+                    val dataOut = if (S) adjustedOutput.toSignBigInt else adjustedOutput.toBigInt
                     assert(dataIn == dataIn, "O >= I")
                 } else {
                     var dataInUnsigned = originalInput.toBigInt

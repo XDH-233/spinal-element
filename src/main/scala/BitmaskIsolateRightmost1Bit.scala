@@ -13,3 +13,12 @@ case class BitmaskIsolateRightmost1Bit(width: Int) extends Component {
     }
     io.wordOut := io.wordIn & (0 - io.wordIn.asUInt).asBits
 }
+
+object BitmaskIsolateRightmost1Bit {
+    def apply(width: Int, wordIn: Bits): BitmaskIsolateRightmost1Bit = {
+        val ret = BitmaskIsolateRightmost1Bit(width)
+        ret.io.wordIn := wordIn
+        ret
+    }
+
+}
