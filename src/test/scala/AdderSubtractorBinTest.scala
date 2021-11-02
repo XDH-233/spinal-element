@@ -7,7 +7,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class AdderSubtractorBinTest extends AnyFlatSpec {
-    for (i <- 2 to 18) {
+    for (i <- 2 to 9) {
         s"${i} bits adder or subtractor" should "work correctly" in simNow(i)
     }
 

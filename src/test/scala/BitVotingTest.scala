@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class BitVotingTest extends AnyFlatSpec {
-    for (t <- 2 until 33) {
+    for (t <- 2 until 9) {
         s"${t}" should "work right " in simNow(t)
     }
 

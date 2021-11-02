@@ -7,7 +7,7 @@ import spinal.lib.fsm._
 
 class DemultiplexerOneHotTest extends AnyFlatSpec {
 //    s"width: 8, count: 5 and not broadcast" should "work right" in simNow(8, 5, false)
-    for (w <- 1 to 16) {
+    for (w <- 1 to 9) {
         for (c <- 2 to 8) {
             s"width: ${w}, count: ${c} and broadcast" should "work right" in simNow(w, c, true)
             s"width: ${w}, count: ${c} and not broadcast" should "work right" in simNow(w, c, false)
@@ -18,7 +18,6 @@ class DemultiplexerOneHotTest extends AnyFlatSpec {
         SimConfig.withWave
             .compile {
                 val dut = new DemultiplexerOneHot(W, C, BroadCast)
-
                 dut
             }
             .doSim { dut =>
@@ -28,7 +27,7 @@ class DemultiplexerOneHotTest extends AnyFlatSpec {
 
                 for (s <- 0 until 1000) {
                     wordIn.randomize()
-                    selectors #= oneHot(outputCount)
+                    selectors.randomOneHot
                     sleep(1)
                     val dataOutArr = wordsOut.toBigInt.divide(W, C)
                     val sel        = selectors.toBigInt

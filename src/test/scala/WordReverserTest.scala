@@ -8,7 +8,7 @@ import spinal.lib.fsm._
 
 class WordReverserTest extends AnyFlatSpec {
     for (w <- 1 to 8) {
-        for (c <- 2 to 16) {
+        for (c <- 2 to 7) {
             s"width: ${w}, count: ${c} input" should "work correctly" in simNow(w, c)
         }
     }
@@ -24,8 +24,6 @@ class WordReverserTest extends AnyFlatSpec {
                 if (dataInStr.length < wordWidth * wordCount) {
                     dataInStr = ("0" * (wordWidth * wordCount - dataInStr.length)) + dataInStr
                 }
-                //                println(dataInStr)
-                //                println(dataInStr.grouped(wordWidth).map(BigInt(_,2)).toArray.mkString(" "))
                 val c = dataInStr.grouped(wordWidth).map(BigInt(_, 2)).toArray.zip(wordsOut.map(_.toBigInt)).foreach { case (gold, res) => assert(res == gold) }
             }
         }

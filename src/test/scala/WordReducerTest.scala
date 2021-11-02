@@ -30,7 +30,6 @@ class WordReducerTest extends AnyFlatSpec {
                     wordsIn.randomize()
                     sleep(1)
                     val dataIn = wordsIn.toBigInt.divide(width, count)
-//                println(dataIn.mkString(" "))
                     val gold = dataIn.reduce((l, r) => operate(l, r, OP))
                     assert(wordOut.toBigInt == gold)
                 }

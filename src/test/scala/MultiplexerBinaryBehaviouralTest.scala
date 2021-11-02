@@ -6,8 +6,8 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class MultiplexerBinaryBehaviouralTest extends AnyFlatSpec {
-    for (w <- 1 to 32) {
-        for (c <- 2 to 16) {
+    for (w <- 1 to 9) {
+        for (c <- 2 to 9) {
             s"word width: ${w} input count: ${c} " should "work right " in simNow(w, c)
         }
     }
@@ -16,7 +16,6 @@ class MultiplexerBinaryBehaviouralTest extends AnyFlatSpec {
         SimConfig.withWave
             .compile {
                 val dut = new MultiplexerBinaryBehavioural(width, count)
-
                 dut
             }
             .doSim { dut =>

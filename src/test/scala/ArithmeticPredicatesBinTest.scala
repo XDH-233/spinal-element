@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class ArithmeticPredicatesBinTest extends AnyFlatSpec {
-    for (w <- 2 to 16) {
+    for (w <- 2 to 9) {
         s"${w} bits design" should "work correctly " in simNow(w)
     }
     def simNow(W: Int) = {

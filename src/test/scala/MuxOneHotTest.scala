@@ -6,8 +6,8 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class MuxOneHotTest extends AnyFlatSpec {
-    for (w <- 1 to 32) {
-        for (c <- 2 to 16) {
+    for (w <- 1 to 9) {
+        for (c <- 2 to 8) {
             s"width: ${w}, count: ${c} input" should "work right" in simNow(w, c)
         }
     }
@@ -25,7 +25,7 @@ class MuxOneHotTest extends AnyFlatSpec {
                 import io._
 
                 for (s <- 0 until 1000) {
-                    selectors #= oneHot(C)
+                    selectors.randomOneHot
                     wordsIn.randomize()
                     sleep(1)
                     val dataInArr = wordsIn.toBigInt.divide(W, C)

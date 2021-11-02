@@ -10,32 +10,32 @@ class BitReducerTest extends AnyFlatSpec {
     import reducerOp._
 
     "bits reducer " should "work as AND" in {
-        for (i <- 2 until 20) {
+        for (i <- 2 until 7) {
             simNow(i, AND)
         }
     }
     "bits reducer " should "work as NAND" in {
-        for (i <- 2 until 20) {
+        for (i <- 2 until 7) {
             simNow(i, NAND)
         }
     }
     "bits reducer " should "work as OR" in {
-        for (i <- 2 until 20) {
+        for (i <- 2 until 7) {
             simNow(i, AND)
         }
     }
     "bits reducer " should "work as NOR" in {
-        for (i <- 2 until 20) {
+        for (i <- 2 until 7) {
             simNow(i, NOR)
         }
     }
     "bits reducer " should "work as XOR" in {
-        for (i <- 2 until 20) {
+        for (i <- 2 until 7) {
             simNow(i, XOR)
         }
     }
     "bits reducer " should "work as XNOR" in {
-        for (i <- 2 until 20) {
+        for (i <- 2 until 7) {
             simNow(i, XNOR)
         }
     }

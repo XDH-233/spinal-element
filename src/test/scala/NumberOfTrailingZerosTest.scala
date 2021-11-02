@@ -6,13 +6,9 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class NumberOfTrailingZerosTest extends AnyFlatSpec {
-    it should "work right" in {
-        simNow(8)
-//        for(l <- 2 until 33){
-//            simNow(l)
-//        }
+    for(w <- 2 to 9){
+        s"NumberOfTrailingZeros ${w} bits" should "work correctly " in simNow(w)
     }
-
     def simNow(W: Int) = {
         SimConfig.withWave
             .compile {
@@ -34,11 +30,6 @@ class NumberOfTrailingZerosTest extends AnyFlatSpec {
                     val dataIn = wordIn.toBigInt
                     val allLog = all_log.toBigInt.divide(log2Up(W), W)
                     val printBlock = {
-//                    println("-------------------------------")
-//                    println("wordIn: " + dataIn.toString(2))
-//                    println("lsb1: " + lsb1.toBigInt.toString(2))
-//                    println(allLog.mkString(" "))
-//                    println("wordOut: " + wordOut.toBigInt)
                     }
                     var count  = 0
                     var addNum = 1

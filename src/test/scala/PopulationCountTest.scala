@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class PopulationCountTest extends AnyFlatSpec {
-    for (t <- 2 until 33) {
+    for (t <- 2 until 9) {
         s"${t} bits input" should "work right" in simNow(t)
     }
     def simNow(W: Int): Unit = {

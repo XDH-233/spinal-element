@@ -10,5 +10,6 @@ set -o xtrace
 
 #sbt about scalafmtCheckAll scalafmtSbtCheck 'scalafix --check'  #FiXME
 sbt scalafmtAll
-sbt clean compile "testOnly LogarithmOfPowersOfTwoTest BitmaskNextWithConstantPopcountNtzTest BitmaskThermometerFromCountTest BitmaskThermometerToRightmost0BitTest BitmaskThermometerToRightmost1BitTest BitmaskTurnOffTrailing1BitsTest BitmaskTurnOnTrailing0BitsTest"
-#sbt clean coverage coverageReport test
+sbt test
+#sbt clean compile "testOnly "
+sbt clean coverage coverageReport test

@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class AddressTranslatorStaticTest extends AnyFlatSpec {
-    for (w <- 2 to 8) {
+    for (w <- 2 to 7) {
         for (b <- 0 until BigInt(2).pow(w).toInt) {
             s"AddressTranslatorStatic, width: ${w}, base: ${b}" should "work correctly" in simNow(w, b)
         }

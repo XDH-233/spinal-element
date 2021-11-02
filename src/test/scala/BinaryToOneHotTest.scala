@@ -6,8 +6,8 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class BinaryToOneHotTest extends AnyFlatSpec {
-    for (i <- 1 to 8) {
-        for (o <- 1 to 8) {
+    for (i <- 1 to 5) {
+        for (o <- 1 to 7) {
             s"input width: ${i}, output width: ${o}" should " work right" in simNow(i, o)
         }
     }

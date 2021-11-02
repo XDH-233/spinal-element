@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class MuxB2to1Test extends AnyFlatSpec {
-    for (w <- 1 to 16) {
+    for (w <- 1 to 9) {
         s"${w} bits input" should "work right" in simNow(w)
     }
     def simNow(W: Int) = {

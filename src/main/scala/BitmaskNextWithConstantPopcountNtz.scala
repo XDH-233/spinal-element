@@ -14,7 +14,7 @@ case class BitmaskNextWithConstantPopcountNtz(width: Int) extends Component {
     val findSmallest         = BitmaskIsolateRightmost1Bit(width = width, io.wordIn)
     val calcRipple           = AdderSubtractorBin(width = width, addOrSub = False, carryIn = False, A = io.wordIn, B = findSmallest.io.wordOut)
     val calcFinalShiftAmount = LogarithmOfPowersOfTwo(width, findSmallest.io.wordOut)
-    val changedBits: Bits    = io.wordIn ^ calcRipple.io.sum
+    val changedBits: Bits = io.wordIn ^ calcRipple.io.sum
     val changedBitsCorrected = Mux(calcRipple.io.carryOut, changedBits, changedBits |>> 2)
     val moveChangedBits = BitShifter(
         width          = width,

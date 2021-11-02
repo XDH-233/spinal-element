@@ -6,7 +6,7 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class AddressDecoderArithmeticTest extends AnyFlatSpec {
-    for (i <- 1 to 16) {
+    for (i <- 1 to 9) {
         s"${i} bits input" should "work right " in simNow(i)
     }
     def simNow(W: Int) = {

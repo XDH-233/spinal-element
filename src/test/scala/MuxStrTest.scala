@@ -7,7 +7,7 @@ import spinal.lib.fsm._
 
 class MuxStrTest extends AnyFlatSpec {
     for (w <- 1 to 7) {
-        for (c <- 2 until 9) {
+        for (c <- 2 until 7) {
             s"width: ${w}, count: ${c} input" should "work right" in simNow(w, c)
         }
     }

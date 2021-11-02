@@ -33,31 +33,3 @@ case class BitmaskNextWithConstantPopcountPop(width: Int) extends Component {
     val calcLostOnes = AdderSubtractorBin(width = width, addOrSub = True, carryIn = False, A = calcShiftedOnes.io.wordOut, B = B(1, width bits))
     io.wordOut := calcRipple.io.sum | calcLostOnes.io.sum
 }
-
-// verilog source code --> BlackBox --> Component
-
-case class Bitmask_Next_with_Constant_Popcount_pop(width: Int) extends BlackBox {
-    addGenerics(("WORD_WIDTH", width))
-    val word_in  = in Bits (width bits)
-    val word_out = out Bits (width bits)
-    addRTLPath("./src/verilog/Bitmask_Next_with_Constant_Popcount_pop.v")
-    addRTLPath("./src/verilog/Adder_Subtractor_Binary.v")
-    addRTLPath("./src/verilog/Hamming_Distance.v")
-    addRTLPath("./src/verilog/Word_Reducer.v")
-    addRTLPath("./src/verilog/Bit_Reducer.v")
-    addRTLPath("./src/verilog/Bit_Shifter.v")
-    addRTLPath("./src/verilog/Population_Count.v")
-    addRTLPath("./src/verilog/Width_Adjuster.v")
-    addRTLPath("./src/verilog/CarryIn_Binary.v")
-    addRTLPath("./src/verilog/Bitmask_Isolate_Rightmost_1_Bit.v")
-}
-
-case class BitmaskNextwithConstantPopcountVerilog(width: Int) extends Component {
-    val io = new Bundle {
-        val wordIn  = in Bits (width bits)
-        val wordOut = out Bits (width bits)
-    }
-    val bitmask_Next_with_Constant_Popcount_pop = Bitmask_Next_with_Constant_Popcount_pop(width)
-    bitmask_Next_with_Constant_Popcount_pop.word_in := io.wordIn
-    io.wordOut                                      := bitmask_Next_with_Constant_Popcount_pop.word_out
-}
