@@ -7,10 +7,10 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 case class WordReverser(wordWidth: Int, wordCount: Int) extends Component {
-    val io = new Bundle {
-        val wordsIn  = in Bits (wordWidth * wordCount bits)
-        val wordsOut = out Vec (Bits(wordWidth bits), wordCount)
-    }
+  val io = new Bundle {
+    val wordsIn  = in Bits (wordWidth * wordCount bits)
+    val wordsOut = out Vec (Bits(wordWidth bits), wordCount)
+  }
 
-    io.wordsOut.zip(Vec(io.wordsIn.subdivideIn(wordWidth bits).reverse.map(_.asBits))).foreach { case (o, i) => o := i }
+  io.wordsOut.zip(Vec(io.wordsIn.subdivideIn(wordWidth bits).reverse.map(_.asBits))).foreach { case (o, i) => o := i }
 }

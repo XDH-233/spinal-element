@@ -6,37 +6,37 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 class TurnOnRightmost0BitTest extends AnyFlatSpec {
-    for (w <- 1 to 9) {
-        s"${w}  bits input TurnOnRightmost0Bit " should "work correctly " in simNow(w)
-    }
-    def simNow(W: Int) = {
-        SimConfig.withWave
-            .compile {
-                val dut = new TurnOnRightmost0Bit(W)
-                dut
+  for (w <- 1 to 9) {
+    s"${w}  bits input TurnOnRightmost0Bit " should "work correctly " in simNow(w)
+  }
+  def simNow(W: Int) = {
+    SimConfig.withWave
+      .compile {
+        val dut = new TurnOnRightmost0Bit(W)
+        dut
+      }
+      .doSim { dut =>
+        import dut._
+        import io._
+        for (s <- 0 until 1000) {
+          wordIn.randomize()
+          sleep(1)
+          val dataIn  = wordIn.toBigInt
+          val dataOut = wordOut.toBigInt
+          var posi    = -1
+          var addNum  = 1
+          for (p <- 0 until W) {
+            posi = posi + addNum
+            if (!dataIn.testBit(p)) {
+              addNum = 0
             }
-            .doSim { dut =>
-                import dut._
-                import io._
-                for (s <- 0 until 1000) {
-                    wordIn.randomize()
-                    sleep(1)
-                    val dataIn  = wordIn.toBigInt
-                    val dataOut = wordOut.toBigInt
-                    var posi    = -1
-                    var addNum  = 1
-                    for (p <- 0 until W) {
-                        posi = posi + addNum
-                        if (!dataIn.testBit(p)) {
-                            addNum = 0
-                        }
-                    }
-                    val gold = dataIn + BigInt(2).pow(posi)
-                    if (dataIn == BigInt(2).pow(W) - 1)
-                        assert(dataOut == BigInt(2).pow(W) - 1)
-                    else
-                        assert(dataOut == gold)
-                }
-            }
-    }
+          }
+          val gold = dataIn + BigInt(2).pow(posi)
+          if (dataIn == BigInt(2).pow(W) - 1)
+            assert(dataOut == BigInt(2).pow(W) - 1)
+          else
+            assert(dataOut == gold)
+        }
+      }
+  }
 }

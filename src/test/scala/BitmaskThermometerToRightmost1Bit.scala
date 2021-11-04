@@ -7,17 +7,17 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 case class BitmaskThermometerToRightmost1Bit(width: Int) extends Component {
-    val io = new Bundle {
-        val wordIn  = in Bits (width bits)
-        val wordOut = out Bits (width bits)
-    }
-    io.wordOut := io.wordIn ^ (io.wordIn.asUInt - 1).asBits
+  val io = new Bundle {
+    val wordIn  = in Bits (width bits)
+    val wordOut = out Bits (width bits)
+  }
+  io.wordOut := io.wordIn ^ (io.wordIn.asUInt - 1).asBits
 }
 
 object BitmaskThermometerToRightmost1Bit {
-    def apply(width: Int, wordIn: Bits): BitmaskThermometerToRightmost1Bit = {
-        val ret = new BitmaskThermometerToRightmost1Bit(width)
-        ret.io.wordIn := wordIn
-        ret
-    }
+  def apply(width: Int, wordIn: Bits): BitmaskThermometerToRightmost1Bit = {
+    val ret = new BitmaskThermometerToRightmost1Bit(width)
+    ret.io.wordIn := wordIn
+    ret
+  }
 }

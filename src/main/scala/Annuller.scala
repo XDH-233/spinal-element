@@ -7,24 +7,34 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 object implementation extends Enumeration {
-    type way = Value
-    val MUX, AND = Value
+  type way = Value
+  val MUX, AND = Value
 
 }
 
 case class Annuller(width: Int, impWay: implementation.Value) extends Component {
-    val io = new Bundle {
-        val annul   = in Bool ()
-        val dataIn  = in Bits (width bits)
-        val dataOut = out Bits (width bits)
-    }
+  val io = new Bundle {
+    val annul   = in Bool ()
+    val dataIn  = in Bits (width bits)
+    val dataOut = out Bits (width bits)
+  }
 
-    impWay match {
-        case implementation.MUX => io.dataOut := Mux(io.annul, B(0), io.dataIn)
-        case implementation.AND => {
-            val tmp = Bits(width bits)
-            tmp.setAllTo(io.annul === False)
-            io.dataOut := io.dataIn & (tmp)
-        }
+  impWay match {
+    case implementation.MUX => io.dataOut := Mux(io.annul, B(0), io.dataIn)
+    case implementation.AND => {
+      val tmp = Bits(width bits)
+      tmp.setAllTo(io.annul === False)
+      io.dataOut := io.dataIn & (tmp)
     }
+  }
+}
+
+object Annuller {
+  def apply(width: Int, impWay: implementation.Value, annul: Bool, dataIn: Bits, dataOut: Bits): Annuller = {
+    val ret = new Annuller(width, impWay)
+    ret.io.annul  := annul
+    ret.io.dataIn := dataIn
+    dataOut       := ret.io.dataOut
+    ret
+  }
 }

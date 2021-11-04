@@ -7,42 +7,42 @@ import spinal.lib.fsm._
 
 class DemultiplexerOneHotTest extends AnyFlatSpec {
 //    s"width: 8, count: 5 and not broadcast" should "work right" in simNow(8, 5, false)
-    for (w <- 1 to 9) {
-        for (c <- 2 to 8) {
-            s"width: ${w}, count: ${c} and broadcast" should "work right" in simNow(w, c, true)
-            s"width: ${w}, count: ${c} and not broadcast" should "work right" in simNow(w, c, false)
+  for (w <- 1 to 9) {
+    for (c <- 2 to 8) {
+      s"width: ${w}, count: ${c} and broadcast" should "work right" in simNow(w, c, true)
+      s"width: ${w}, count: ${c} and not broadcast" should "work right" in simNow(w, c, false)
+    }
+  }
+
+  def simNow(W: Int, C: Int, BroadCast: Boolean) = {
+    SimConfig.withWave
+      .compile {
+        val dut = new DemultiplexerOneHot(W, C, BroadCast)
+        dut
+      }
+      .doSim { dut =>
+        import dut._
+        import lib.simSupport._
+        import io._
+
+        for (s <- 0 until 1000) {
+          wordIn.randomize()
+          selectors.randomOneHot
+          sleep(1)
+          val dataOutArr = wordsOut.toBigInt.divide(W, C)
+          val sel        = selectors.toBigInt
+          assert(validsOut.toBigInt == sel)
+          if (BroadCast) {
+            dataOutArr.foreach(w => assert(w == wordIn.toBigInt))
+          } else {
+            for (i <- 0 until outputCount) {
+              if (sel.testBit(i))
+                assert(dataOutArr(i) == wordIn.toBigInt)
+              else
+                assert(dataOutArr(i) == BigInt(0))
+            }
+          }
         }
-    }
-
-    def simNow(W: Int, C: Int, BroadCast: Boolean) = {
-        SimConfig.withWave
-            .compile {
-                val dut = new DemultiplexerOneHot(W, C, BroadCast)
-                dut
-            }
-            .doSim { dut =>
-                import dut._
-                import lib.simSupport._
-                import io._
-
-                for (s <- 0 until 1000) {
-                    wordIn.randomize()
-                    selectors.randomOneHot
-                    sleep(1)
-                    val dataOutArr = wordsOut.toBigInt.divide(W, C)
-                    val sel        = selectors.toBigInt
-                    assert(validsOut.toBigInt == sel)
-                    if (BroadCast) {
-                        dataOutArr.foreach(w => assert(w == wordIn.toBigInt))
-                    } else {
-                        for (i <- 0 until outputCount) {
-                            if (sel.testBit(i))
-                                assert(dataOutArr(i) == wordIn.toBigInt)
-                            else
-                                assert(dataOutArr(i) == BigInt(0))
-                        }
-                    }
-                }
-            }
-    }
+      }
+  }
 }

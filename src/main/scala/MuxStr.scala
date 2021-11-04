@@ -7,16 +7,12 @@ import spinal.lib._
 import spinal.lib.fsm._
 
 case class MuxStr(wordWidth: Int, inputCount: Int) extends Component {
-    val io = new Bundle {
-        val selector = in UInt (log2Up(inputCount) bits)
-        val wordsIn  = in Bits (wordWidth * inputCount bits)
-        val wordOut  = out Bits (wordWidth bits)
-    }
+  val io = new Bundle {
+    val selector = in UInt (log2Up(inputCount) bits)
+    val wordsIn  = in Bits (wordWidth * inputCount bits)
+    val wordOut  = out Bits (wordWidth bits)
+  }
 
-    val selectorCov = BinaryToOneHot(log2Up(inputCount), inputCount)
-    selectorCov.io.binaryIn := io.selector.asBits
-    val muxOneHot = MuxOneHot(wordWidth, inputCount)
-    muxOneHot.io.selectors := selectorCov.io.oneHotOut
-    muxOneHot.io.wordsIn   := io.wordsIn
-    io.wordOut             := muxOneHot.io.wordOut
+  val selectorCov = BinaryToOneHot(log2Up(inputCount), inputCount, bianryIn = io.selector.asBits)
+  val muxOneHot = MuxOneHot(wordWidth, inputCount, selectors = selectorCov.io.oneHotOut, wordsIn = io.wordsIn, wordOut = io.wordOut)
 }
