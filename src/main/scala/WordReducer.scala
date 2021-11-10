@@ -28,10 +28,11 @@ object WordReducer {
     ret.io.wordsIn := wordsIn
     ret
   }
+
   def apply(wordWidth: Int, wordCount: Int, op: reducerOp.Value, wordsIn: Bits, wordOut: Bits): WordReducer = {
     val ret = WordReducer(wordWidth, wordCount, op)
     ret.io.wordsIn := wordsIn
-    wordOut := ret.io.wordOut
+    wordOut        := ret.io.wordOut
     ret
   }
 }

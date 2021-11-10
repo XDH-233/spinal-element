@@ -13,23 +13,35 @@ case class RegisterPipeline(width: Int, pipeDepth: Int) extends Component {
     val parallelOut  = out Bits (width * pipeDepth bits)
     val pipeIn       = in Bits (width bits)
     val pipeOut      = out Bits (width bits)
+    val en           = in Bool ()
   }
   val regs                            = Array.fill(pipeDepth)(Reg(Bits(width bits)) init (0))
   val multiplexerBinaryBehaviouralArr = Array.fill(pipeDepth)(MultiplexerBinaryBehavioural(width, 2))
   multiplexerBinaryBehaviouralArr.foreach(_.io.selector := io.parallelLoad.asUInt)
   multiplexerBinaryBehaviouralArr.head.io.wordsIn       := io.parallelIn(width - 1 downto 0) ## io.pipeIn
   Range(1, pipeDepth).foreach(i => multiplexerBinaryBehaviouralArr(i).io.wordsIn := io.parallelIn((i + 1) * width - 1 downto i * width) ## regs(i - 1))
-  multiplexerBinaryBehaviouralArr.zip(regs).foreach { case (m, r) => r := m.io.wordOut }
+  multiplexerBinaryBehaviouralArr.zip(regs).foreach { case (m, r) => r := Mux(io.en, m.io.wordOut, r) }
   io.pipeOut     := regs.last
   io.parallelOut := regs.reverse.reduce(_ ## _)
 }
 
 object RegisterPipeline {
-  def apply(width: Int, pipeDepth: Int, parallelLoad: Bool, parallelIn: Bits, pipeIn: Bits): RegisterPipeline = {
+  def apply(width: Int, pipeDepth: Int, parallelLoad: Bool, parallelIn: Bits, pipeIn: Bits, en: Bool): RegisterPipeline = {
     val ret = new RegisterPipeline(width, pipeDepth)
     ret.io.parallelLoad := parallelLoad
     ret.io.parallelIn   := parallelIn
     ret.io.pipeIn       := pipeIn
+    ret.io.en           := en
+    ret
+  }
+
+  def apply(width: Int, pipeDepth: Int, parallelLoad: Bool, parallelIn: Bits, pipeIn: Bits, en: Bool, parallelOut: Bits): RegisterPipeline = {
+    val ret = RegisterPipeline(width, pipeDepth)
+    ret.io.parallelLoad := parallelLoad
+    ret.io.parallelIn   := parallelIn
+    ret.io.pipeIn       := pipeIn
+    ret.io.en           := en
+    parallelOut         := ret.io.parallelOut
     ret
   }
 }

@@ -34,6 +34,7 @@ class WordReducerTest extends AnyFlatSpec {
           assert(wordOut.toBigInt == gold)
         }
       }
+
     def operate(a: BigInt, b: BigInt, opt: Value): BigInt = {
       opt match {
         case AND  => a & b

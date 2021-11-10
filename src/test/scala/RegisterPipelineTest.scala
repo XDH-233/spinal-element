@@ -31,6 +31,7 @@ class RegisterPipelineTest extends AnyFlatSpec {
         val dataQ = Queue[BigInt]()
         dut.clockDomain.forkStimulus(10)
         io.parallelLoad #= false
+        io.en           #= false
         io.pipeIn       #= 0
         io.parallelIn   #= 0
         clockDomain.waitSampling()
@@ -39,22 +40,30 @@ class RegisterPipelineTest extends AnyFlatSpec {
         }
         for (s <- 0 until 1000) {
           io.parallelLoad.randomize()
+          io.en.randomize()
           io.pipeIn.randomize()
           io.parallelIn.randomize()
           clockDomain.waitSampling()
+          val parallelIn  = io.parallelIn.toBigInt.divide(W, P)
+          val parallelOut = io.parallelOut.toBigInt.divide(W, pipeDepth)
           if (io.parallelLoad.toBoolean) {
-            val parallelIn  = io.parallelIn.toBigInt.divide(W, P)
-            val parallelOut = io.parallelOut.toBigInt.divide(W, pipeDepth)
             for (i <- 0 until pipeDepth) {
               assert(parallelOut(i) == dataQ(pipeDepth - 1 - i), s"paraOut, ${i}")
             }
-            parallelIn.reverse.foreach(dataQ.enqueue(_))
-            for (i <- 0 until pipeDepth) {
-              dataQ.dequeue()
+            if (io.en.toBoolean) {
+              parallelIn.reverse.foreach(dataQ.enqueue(_))
+              for (i <- 0 until pipeDepth) {
+                dataQ.dequeue()
+              }
             }
           } else {
-            dataQ.enqueue(io.pipeIn.toBigInt)
-            assert(io.pipeOut.toBigInt == dataQ.dequeue())
+            if (io.en.toBoolean) {
+              dataQ.enqueue(io.pipeIn.toBigInt)
+              assert(io.pipeOut.toBigInt == dataQ.dequeue())
+            } else {
+              assert(io.pipeOut.toBigInt == dataQ.head)
+            }
+
           }
         }
       }

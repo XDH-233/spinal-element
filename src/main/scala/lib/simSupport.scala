@@ -17,6 +17,7 @@ object simSupport {
       }
       res
     }
+
     // divide a BigInt num by bit width
     def divide(width: Int, count: Int): Array[BigInt] = {
       var bStr = b.toString(2)
@@ -24,6 +25,7 @@ object simSupport {
         bStr = "0" * (width * count - bStr.length) + bStr
       bStr.grouped(width).map(BigInt(_, 2)).toArray.reverse
     }
+
     // BigInt's toString(2) will truncate heading zeros, so I improve this.
     def toBinaryString(width: Int): String = {
       var ret = b.toString(2)
@@ -40,6 +42,7 @@ object simSupport {
       ret
     }
   }
+
   implicit class BitsSim(b: Bits) {
     def toSignBigInt: BigInt = {
       val width = b.getWidth

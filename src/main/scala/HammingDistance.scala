@@ -13,7 +13,7 @@ case class HammingDistance(width: Int) extends Component {
   }
 
   val reducerXOR = WordReducer(width, 2, reducerOp.XOR, wordsIn = io.wordA ## io.wordB)
-  val popCount = PopulationCount(width, wordIn = reducerXOR.io.wordOut, io.distance)
+  val popCount   = PopulationCount(width, wordIn = reducerXOR.io.wordOut, io.distance)
 }
 
 object HammingDistance {

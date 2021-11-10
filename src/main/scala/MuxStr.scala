@@ -14,5 +14,5 @@ case class MuxStr(wordWidth: Int, inputCount: Int) extends Component {
   }
 
   val selectorCov = BinaryToOneHot(log2Up(inputCount), inputCount, bianryIn = io.selector.asBits)
-  val muxOneHot = MuxOneHot(wordWidth, inputCount, selectors = selectorCov.io.oneHotOut, wordsIn = io.wordsIn, wordOut = io.wordOut)
+  val muxOneHot   = MuxOneHot(wordWidth, inputCount, selectors = selectorCov.io.oneHotOut, wordsIn = io.wordsIn, wordOut = io.wordOut)
 }

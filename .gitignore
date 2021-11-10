@@ -15,5 +15,9 @@ tmp
 draft.sc
 *.v
 .bsp
-
+.idea
 *Verilog.scala
+
+verilog
+
+VerilogComp.scala
