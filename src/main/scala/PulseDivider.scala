@@ -32,3 +32,13 @@ case class PulseDivider(wordWidth: Int, initialDivisor: Int) extends Component {
   io.pulseOut  := divisionDone && ~io.restart
   io.divByZero := divisorReg === 0
 }
+
+object PulseDivider {
+  def apply(wordWidth: Int, initialDivisor: Int, restart: Bool, divisor: UInt, pulsesIn: Bool): PulseDivider = {
+    val ret = new PulseDivider(wordWidth, initialDivisor)
+    ret.io.restart  := restart
+    ret.io.divisor  := divisor
+    ret.io.pulsesIn := pulsesIn
+    ret
+  }
+}
