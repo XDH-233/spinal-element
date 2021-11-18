@@ -12,19 +12,18 @@ class WordReverserTest extends AnyFlatSpec {
       s"width: ${w}, count: ${c} input" should "work correctly" in simNow(w, c)
     }
   }
-  def simNow(W: Int, C: Int) = {
+  def simNow(W: Int = 4, C: Int = 5) = {
     SimConfig.withWave.compile(new WordReverser(wordWidth = W, wordCount = C)).doSim { dut =>
       import dut._
       import io._
+      import lib.simSupport._
+
       for (s <- 0 until 100) {
         wordsIn.randomize()
         sleep(1)
-        val dataIn    = wordsIn.toBigInt
-        var dataInStr = dataIn.toString(2)
-        if (dataInStr.length < wordWidth * wordCount) {
-          dataInStr = ("0" * (wordWidth * wordCount - dataInStr.length)) + dataInStr
-        }
-        val c = dataInStr.grouped(wordWidth).map(BigInt(_, 2)).toArray.zip(wordsOut.map(_.toBigInt)).foreach { case (gold, res) => assert(res == gold) }
+        val dataInArr  = wordsIn.toBigInt.divide(W, C)
+        val dataOutArr = wordsOut.toBigInt.divide(W, C)
+        dataInArr.reverse.zip(dataOutArr).foreach { case (i, o) => assert(i == o) }
       }
     }
   }
