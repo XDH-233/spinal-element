@@ -48,8 +48,8 @@ case class AdderSubtractorBinaryMultiprecision(wordWidth: Int, stepWordWidth: In
   val padWidth           = stepWordWidthTotal - wordWidth
 
   // default value of the combinatorial output ports
-  io.input.ready     := False
-  io.output.valid    := False
+  io.input.ready  := False
+  io.output.valid := False
 
   val inputLoad   = Bool()
   val calculating = Bool()
@@ -159,7 +159,7 @@ case class AdderSubtractorBinaryMultiprecision(wordWidth: Int, stepWordWidth: In
   io.output.carries := carriesReversed.resize(wordWidth)
 
   // deal with carryOut
-  val allCarries = stepCarryIn ## carriesReversed(stepWordWidthTotal - 1 downto stepWordWidth * (stepWordCount - 1))
+  val allCarries  = stepCarryIn ## carriesReversed(stepWordWidthTotal - 1 downto stepWordWidth * (stepWordCount - 1))
   val lastCarryIn = allCarries(stepWordWidth - padWidth - 1)
   io.output.carryOut := allCarries(stepWordWidth - padWidth)
   io.output.overflow := lastCarryIn ^ io.output.carryOut

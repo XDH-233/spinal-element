@@ -51,7 +51,17 @@ object simSupport {
         ret = ret - BigInt(2).pow(width)
       return ret
     }
+
     def randomOneHot = { b #= 1 << scala.util.Random.nextInt(b.getWidth) }
+
+    def getSignedValue(i: BigInt) = {
+      val width = b.getWidth
+      if (i >= 0) {
+        b #= i
+      } else {
+        b #= (BigInt(1) << width) + i
+      }
+    }
   }
 
 }
